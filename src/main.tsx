@@ -21,6 +21,11 @@ const theme = createTheme({
           deg: 45
         }
       }
+    },
+    Modal: {
+      defaultProps: {
+         withinPortal: false
+      }
     }
   }
 });
@@ -29,8 +34,8 @@ const theme = createTheme({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <MantineProvider forceColorScheme='dark' theme={theme}>
-      <Notifications position='bottom-right' autoClose={5000} />
       <App />
+      <Notifications position='bottom-right' autoClose={5000} />
     </MantineProvider>
   </StrictMode>,
 )

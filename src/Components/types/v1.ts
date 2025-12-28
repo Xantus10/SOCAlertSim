@@ -1,4 +1,44 @@
 
+/**
+ * Severity of the alert  
+ * `1 - Critical`  
+ * `2 - High`  
+ * `3 - Medium`  
+ * `4 - Low`  
+ */
+type Severity = 1 | 2 | 3 | 4;
+
+
+export function severityString(sev: Severity) {
+  switch (sev) {
+    case 1:
+      return 'Critical';
+    case 2:
+      return 'High';
+    case 3:
+      return 'Medium';
+    case 4:
+      return 'Low';
+    default:
+      return 'Undefined'
+  }
+}
+
+export function severityColor(sev: Severity) {
+  switch (sev) {
+    case 1:
+      return 'red';
+    case 2:
+      return 'orange';
+    case 3:
+      return 'yellow';
+    case 4:
+      return 'lightgreen';
+    default:
+      return 'white'
+  }
+}
+
 
 /**
  * One alert data
@@ -15,13 +55,9 @@ export interface Alert {
   timestamp: number;
 
   /**
-   * Severity of the alert  
-   * `1 - Critical`  
-   * `2 - High`  
-   * `3 - Medium`  
-   * `4 - Low`  
+   * Severity
    */
-  severity: 1 | 2 | 3 | 4;
+  severity: Severity;
 
   /**
    * Brief description of the triggered alert

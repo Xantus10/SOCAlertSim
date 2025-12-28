@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Paper, Title, Box, Group } from '@mantine/core'
+import { Paper, Title, Box, Group, Drawer } from '@mantine/core'
 
 import SelectJson from './Components/SelectJson'
 import { JsonProvider } from './Components/JsonContext'
@@ -13,7 +13,7 @@ function App() {
       <>
       <Paper bd="solid 1px white" w="100%" pl="30px"><Title order={2}>SOC Alert Sim</Title></Paper>
       <JsonProvider>
-        <Group p="1rem">
+        <Group p="1rem" align="flex-start">
           <Box>
             <SelectJson />
           </Box>

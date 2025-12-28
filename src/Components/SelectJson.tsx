@@ -46,7 +46,7 @@ function SelectJson() {
 
   return (<>
     <Button onClick={discController.open}>JSON</Button>
-    <Modal opened={disc} onClose={discController.close} withinPortal={false} title="Select JSON" >
+    <Modal opened={disc} onClose={discController.close} title="Select JSON" >
       <Text>From github (Preset)</Text>
       <NativeSelect data={gitlist} value={github} onChange={(e) => {setGithub(e.currentTarget.value)}} />
       <Text>From URL</Text>
