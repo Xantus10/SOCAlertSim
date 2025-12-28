@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "name": "First lab",
+  "alerts": [
+    {"id": 1, "timestamp": 1766916969, "severity": 2,
+    "briefdesc": "Brute-force login attempt detected",
+    "description": "This alert triggers, when a certain limit of unsuccessful login attempts per 5 minutes is reached",
+    "fields": {
+      "host_ip": "192.168.122.27",
+      "hostname": "HR-101-PC-13",
+      "protocol": "RDP",
+      "src_ip": "91.16.44.182",
+      "src_hostname": "Unknown (Outside IP)",
+      "attempts_threshold": 10,
+      "attempts_made": 3720
+    }},
+    {"id": 2, "timestamp": 1766916998, "severity": 3,
+    "briefdesc": "Unusual User-Agent detected",
+    "description": "This alert triggers when a request to a web server features an unusual User-Agent (defined through a list)",
+    "fields": {
+      "host_ip": "192.168.10.2",
+      "hostname": "SRV-WEB-1",
+      "src_ip": "192.168.22.7",
+      "src_hostname": "FOOD-ORDER-BOX-1",
+      "user_agent": "sqlmap/1.3.11",
+      "request_domain": "internal.company.cz",
+      "request_path": "/product"
+    }}
+  ]
+}
