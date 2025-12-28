@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Paper, Title, Box, Group } from '@mantine/core'
+
+import SelectJson from './Components/SelectJson'
+import { JsonProvider } from './Components/JsonContext'
+
+import AlertInspector from './Pages/AlertInspector'
+
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <>
+      <Paper bd="solid 1px white" w="100%" pl="30px"><Title order={2}>SOC Alert Sim</Title></Paper>
+      <JsonProvider>
+        <Group p="1rem">
+          <Box>
+            <SelectJson />
+          </Box>
+          <Box>
+            <BrowserRouter basename='/SOCAlertSim'>
+              <Routes>
+                <Route path='/' element={<AlertInspector />} />
+              </Routes>
+            </BrowserRouter>
+          </Box>
+        </Group>
+      </JsonProvider>
+      </>
+    )
 }
 
-export default App
+export default App;
