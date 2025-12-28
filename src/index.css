@@ -58,3 +58,7 @@ button:focus-visible {
 h1, h2, h3, h4 {
   margin: 12px 0px 12px 0px !important;
 }
+
+td {
+  white-space: pre;
+}

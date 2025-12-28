@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Paper, Title, Box, Group, Drawer } from '@mantine/core'
+import { Paper, Title, Box, Group } from '@mantine/core'
 
 import SelectJson from './Components/SelectJson'
 import { JsonProvider } from './Components/JsonContext'

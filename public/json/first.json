@@ -9,12 +9,26 @@
       "host_ip": "192.168.122.27",
       "hostname": "HR-101-PC-13",
       "protocol": "RDP",
+      "username": "Administrator",
       "src_ip": "91.16.44.182",
       "src_hostname": "Unknown (Outside IP)",
       "attempts_threshold": 10,
       "attempts_made": 3720
     }},
-    {"id": 2, "timestamp": 1766916998, "severity": 3,
+    {"id": 2, "timestamp": 1766916998, "severity": 2,
+    "briefdesc": "Brute-force login attempt detected",
+    "description": "This alert triggers, when a certain limit of unsuccessful login attempts per 5 minutes is reached",
+    "fields": {
+      "host_ip": "192.168.114.6",
+      "hostname": "LAW-26-PC-3",
+      "protocol": "SSH",
+      "username": "JohnsonMat",
+      "src_ip": "192.168.110.22",
+      "src_hostname": "LAW-LAPTOP-7",
+      "attempts_threshold": 10,
+      "attempts_made": 16
+    }},
+    {"id": 3, "timestamp": 1766917198, "severity": 3,
     "briefdesc": "Unusual User-Agent detected",
     "description": "This alert triggers when a request to a web server features an unusual User-Agent (defined through a list)",
     "fields": {
@@ -25,6 +39,35 @@
       "user_agent": "sqlmap/1.3.11",
       "request_domain": "internal.company.cz",
       "request_path": "/product"
+    }},
+    {"id": 4, "timestamp": 1766918198, "severity": 3,
+    "briefdesc": "Double extension file",
+    "description": "Matches filenames with double extension (ie. .pdf.exe, .mp4.scr)",
+    "fields": {
+      "host_ip": "192.168.122.99",
+      "hostname": "HR-103-PC-4",
+      "user": "RonaldDon",
+      "path": "C:\\Users\\RonaldDon\\Downloads\\kittens.jpg.exe",
+      "file_type": "Windows Executable"
+    }},
+    {"id": 5, "timestamp": 1766919866, "severity": 4,
+    "briefdesc": "Multiple spaces in filename",
+    "description": "Indicates that a filename contains multiple spaces, which can be a sign of masquerading a malicious extension",
+    "fields": {
+      "host_ip": "192.168.84.54",
+      "hostname": "ACC-LAPTOP-12",
+      "user": "MontanaJul",
+      "path": "C:\\Users\\MontanaJul\\Desktop\\accounting_model   .xlsx",
+      "file_type": "Excel spreadsheet"
+    }},
+    {"id": 6, "timestamp": 1766919999, "severity": 2,
+    "briefdesc": "Well known credential dumping tool detected",
+    "description": "A well known credential dumping tool (eg. mimikatz) was detected",
+    "fields": {
+      "host_ip": "192.168.84.54",
+      "hostname": "LOG-H2-PC-MAIN",
+      "user": "Logistics2",
+      "path": "C:\\Windows\\Temp\\ax22s4d\\mimikatz.exe"
     }}
   ]
 }
