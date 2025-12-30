@@ -63,7 +63,10 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
   const [detailsDisc, detailsDiscController] = useDisclosure(false);
   const [editDisc, editDiscController] = useDisclosure(false);
   
-
+  useEffect(() => {
+    detailsDiscController.close();
+    editDiscController.close();
+  }, [alertData]);
 
   return (
     <Paper bg={"dark.6"} bd={`solid 1px ${severityColor(severity)}`} key={id}>
