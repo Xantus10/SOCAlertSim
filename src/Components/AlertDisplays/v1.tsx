@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Stack, Grid, Tooltip, Title, Paper, Button, Group, Text, Table, NativeSelect, Textarea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
@@ -107,6 +107,11 @@ export function AlertsDisplay( { json }: {json: V1Json} ) {
   function setTa(id: number, s: string) {
     setTas({...tas, [id]: s});
   }
+
+  useEffect(() => {
+    setEvals(Object.fromEntries(json.alerts.map((v) => [v.id, -1])));
+    setTas(Object.fromEntries(json.alerts.map((v) => [v.id, ""])));
+  }, [json])
 
 
   function exportAnswers() {
