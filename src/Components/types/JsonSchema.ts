@@ -1,3 +1,3 @@
-import type { Json as v1Json } from "./v1";
+import type { V1Json } from "./v1";
 
-export type JsonSchema = v1Json //| v2
+export type JsonSchema = V1Json;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Modal, Text, FileInput, TextInput, NativeSelect } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 
 import { useSetJson } from "./JsonContext";
 
@@ -11,7 +12,11 @@ function SelectJson() {
   const [disc, discController] = useDisclosure(false);
 
   const [github, setGithub] = useState<string>("");
-  const gitlist = ["", "first.json"];
+
+  /**
+   * PRESET LABS LIST
+   */
+  const gitlist = ["", "first.json", "second.json"];
 
   const [url, setUrl] = useState("");
 
@@ -22,6 +27,7 @@ function SelectJson() {
       let cont = await finp?.text();
       if (cont) setJson(JSON.parse(cont));
       setFinp(null);
+      notifications.show({message: "Json loaded"});
       discController.close();
       return;
     }
@@ -33,6 +39,7 @@ function SelectJson() {
     }
     setGithub("");
     setUrl("");
+    notifications.show({message: "Json loaded"});
     discController.close();
   }
 

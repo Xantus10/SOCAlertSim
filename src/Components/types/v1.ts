@@ -94,3 +94,45 @@ export interface Json {
    */
   alerts: Alert[];
 };
+
+/**
+ * Json enriched with partial error checking
+ */
+export interface JsonECpart extends Json {
+  /**
+   * Indicates support for error checking
+   */
+  ec: 'partial';
+
+  /**
+   * Hash for error checking
+   *  
+   * Will be calculated by appending the string values of the eval numbers
+   */
+  solution: string;
+};
+
+/**
+ * Json enriched with full error checking
+ */
+export interface JsonECfull extends Json {
+  /**
+   * Indicates support for error checking
+   */
+  ec: 'full';
+
+  /**
+   * Salt for the hashing algorithm
+   */
+  salt: string;
+
+  /**
+   * Hash for error checking
+   * 
+   * Will be calculated by hash(prev_hash + str(cur_ev))  
+   * For the first hash prev_hash=salt
+   */
+  solution: string[];
+};
+
+export type V1Json = Json | JsonECpart | JsonECfull;
