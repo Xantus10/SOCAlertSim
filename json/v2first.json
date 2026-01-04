@@ -1,0 +1,130 @@
+{
+  "version": 2,
+  "name": "Alerts with logs lab",
+  "ec": "full",
+  "salt": "a90b61a9680665a7d31dd1b025d1e354ce55c32c7a8ea53a7a08f45f86d0b57b",
+  "solution": [
+    "d7a6c4efee139279ab58aeb86f444a0e43acf33fcdd5ee5bbd93df964a1bfa44",
+    "761833c0c139d818cdde1a508fa67f45e381ac0222f044518e22013f625b2ed4",
+    "24d1b7c3f13be73d971b0aa86f65497ac1ee6cf0bcab55de98e8f0bb8a2cff05",
+    "481ac9c38c6e955f8f4a6b6f6e90a199c4be9b55dfcd616d1b608c15f3c59969",
+    "81ffcb86804b30424862136a16a3e8196443b4e898f0f53e6575d39886e96b10"
+  ],
+  "alerts": [
+    {
+      "id": 1, "timestamp": 1767342355, "severity": 3,
+      "briefdesc": "Impossible geolocation login attempts",
+      "description": "This alert triggers, when logins for a single account are detected from various geographic locations which are unreachable in a short time period",
+      "logs": [
+        {
+          "id": 19859, "timestamp": 1767342001, "source": "VPN_Remote_Access_GW",
+          "description": "Login",
+          "payload": "{\"timestamp\":1767342000,\"src_ip\":\"197.157.211.164\",\"username\":\"StarPat\",\"auth_res\":\"SUCCESS\",\"approx_lat\":-4.3246,\"approx_long\":15.3215,\"approx_location\":\"Kongo\"}"
+        },
+        {
+          "id": 24189, "timestamp": 1767342152, "source": "VPN_Remote_Access_GW",
+          "description": "Login",
+          "payload": "{\"timestamp\":1767342190,\"src_ip\":\"18.2.166.22\",\"username\":\"StarPat\",\"auth_res\":\"SUCCESS\",\"approx_lat\":42.3751,\"approx_long\":-71.1057,\"approx_location\":\"United States/Massachusetts\"}"
+        },
+        {
+          "id": 26891, "timestamp": 1767342203, "source": "VPN_Remote_Access_GW",
+          "description": "Login",
+          "payload": "{\"timestamp\":1767342300,\"src_ip\":\"200.14.177.22\",\"username\":\"StarPat\",\"auth_res\":\"SUCCESS\",\"approx_lat\":-33.4265,\"approx_long\":-70.5665,\"approx_location\":\"Chile\"}"
+        }
+      ]
+    },
+    {
+      "id": 2, "timestamp": 1767343275, "severity": 1,
+      "briefdesc": "New account with elevated privileges created on a resource",
+      "description": "This alert triggers, when new account is created anywhere in the network and added to security-enabled groups. Such activity may indicate attacker trying to establish persistence and privilege escalation through T1136",
+      "logs": [
+        {
+          "id": 18974, "timestamp": 1767343219, "source": "SRVDC02",
+          "description": "A user account was created",
+          "payload": "{\"EventID\":4720,\"EventName\":\"A user account was created\",\"Computer\":\"SRVDC02.company.cz\",\"Subject\":{\"SecurityID\":\"company.cz\\\\Administrator\",\"AccountName\":\"Administrator\",\"AccountDomain\":\"company.cz\",\"LogonID\":999},\"NewAccount\":{\"SecurityID\":\"S-1-5-21-1966530601-3185510712-10604624-1013\",\"AccountName\":\"svc_systembackup\",\"AccountDomain\":\"company.cz\"},\"Attributes\":{\"SAMAccountName\":\"svc_systembackup\",\"DisplayName\":\"-\",\"HomeDirectory\":\"-\",\"HomeDrive\":\"-\",\"AccountExpires\":\"never\",\"OldUACValue\":0,\"NewUACValue\":21},\"AdditionalInformation\":{\"Privileges\":\"-\"}}"
+        },
+        {
+          "id": 18980, "timestamp": 1767343228, "source": "SRVDC02",
+          "description": "A member was added to a security-enabled universal group",
+          "payload": "{\"EventID\":4732,\"EventName\":\"A member was added to security-enabled local group\",\"Computer\":\"SRVDC02.company.cz\",\"Subject\":{\"SecurityID\":\"company.cz\\\\Administrator\",\"AccountName\":\"Administrator\",\"AccountDomain\":\"company.cz\",\"LogonID\":999},\"Member\":{\"SecurityID\":\"S-1-5-21-1966530601-3185510712-10604624-1013\",\"AccountName\":\"-\"},\"Group\":{\"SecurityID\":\"BUILTIN\\\\Users\",\"GroupName\":\"Users\",\"GroupDomain\":\"Builtin\"},\"AdditionalInformation\":{\"Privileges\":\"-\"}}"
+        },
+        {
+          "id": 19125, "timestamp": 1767343238, "source": "SRVDC02",
+          "description": "A member was added to a security-enabled universal group",
+          "payload": "{\"EventID\":4732,\"EventName\":\"A member was added to security-enabled local group\",\"Computer\":\"SRVDC02.company.cz\",\"Subject\":{\"SecurityID\":\"company.cz\\\\Administrator\",\"AccountName\":\"Administrator\",\"AccountDomain\":\"company.cz\",\"LogonID\":999},\"Member\":{\"SecurityID\":\"S-1-5-21-1966530601-3185510712-10604624-1013\",\"AccountName\":\"-\"},\"Group\":{\"SecurityID\":\"BUILTIN\\\\Remote Desktop Users\",\"GroupName\":\"Remote Desktop Users\",\"GroupDomain\":\"Builtin\"},\"AdditionalInformation\":{\"Privileges\":\"-\"}}"
+        }
+      ]
+    },
+    {
+      "id": 3, "timestamp": 1767343450, "severity": 2,
+      "briefdesc": "Password spraying detected",
+      "description": "This rule matches login attempts with nonexistent usernames",
+      "logs": [
+        {
+          "id": 48978, "timestamp": 1767343389, "source": "HR-103-PC-1",
+          "description": "An account failed to log on",
+          "payload": "{\"EventID\":4625,\"EventName\":\"An account failed to log on\",\"Computer\":\"HR-103-PC-1.company.cz\",\"Subject\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"-\",\"AccountDomain\":\"-\",\"LogonID\":0},\"LogonType\":2,\"AccountForWhichTheLogonFailed\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"GuloJan\",\"AccountDomain\":\"\"},\"FailiureInformation\":{\"FailiureReason\":\"Unknown username or bad password\",\"Status\":3221225581,\"SubStatus\":3221225578}}"
+        },
+        {
+          "id": 48999, "timestamp": 1767343400, "source": "HR-103-PC-1",
+          "description": "An account failed to log on",
+          "payload": "{\"EventID\":4625,\"EventName\":\"An account failed to log on\",\"Computer\":\"HR-103-PC-1.company.cz\",\"Subject\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"-\",\"AccountDomain\":\"-\",\"LogonID\":0},\"LogonType\":2,\"AccountForWhichTheLogonFailed\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"GuliJam\",\"AccountDomain\":\"\"},\"FailiureInformation\":{\"FailiureReason\":\"Unknown username or bad password\",\"Status\":3221225581,\"SubStatus\":3221225578}}"
+        },
+        {
+          "id": 49060, "timestamp": 1767343414, "source": "HR-103-PC-1",
+          "description": "An account failed to log on",
+          "payload": "{\"EventID\":4625,\"EventName\":\"An account failed to log on\",\"Computer\":\"HR-103-PC-1.company.cz\",\"Subject\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"-\",\"AccountDomain\":\"-\",\"LogonID\":0},\"LogonType\":2,\"AccountForWhichTheLogonFailed\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"GuliJa\",\"AccountDomain\":\"\"},\"FailiureInformation\":{\"FailiureReason\":\"Unknown username or bad password\",\"Status\":3221225581,\"SubStatus\":3221225578}}"
+        },
+        {
+          "id": 49084, "timestamp": 1767343423, "source": "HR-103-PC-1",
+          "description": "An account was successfully logged on",
+          "payload": "{\"EventID\":4624,\"EventName\":\"An account was successfully logged on\",\"Computer\":\"HR-103-PC-1.company.cz\",\"Subject\":{\"SecurityID\":\"SYSTEM\",\"AccountName\":\"HR-103-PC-1\",\"AccountDomain\":\"company.cz\",\"LogonID\":999},\"LogonInformation\":{\"LogonType\":2,\"RestrictedAdminMode\":\"-\",\"ElevatedToken\":\"No\"},\"NewLogon\":{\"SecurityID\":\"company.cz\\\\GuliJan\",\"AccountName\":\"GuliJan\",\"AccountDomain\":\"company.cz\",\"LogonID\":2620403030}}"
+        }
+      ]
+    },
+    {
+      "id": 4, "timestamp": 1767343688, "severity": 3,
+      "briefdesc": "DNS Tunneling detected",
+      "description": "Detects possible DNS Tunneling attempts",
+      "logs": [
+        {
+          "id": 51971, "timestamp": 1767343615, "source": "Zeek",
+          "description": "DNS TXT request to an unusual domain",
+          "payload": "{\"timestamp\":1767343614,\"src_ip\":\"192.168.22.7\",\"src_port\":50264,\"dst_ip\":\"8.8.8.8\",\"dst_port\":53,\"prot\":\"UDP\",\"record_type\":\"TXT\",\"domain\":\"com1[.]gunsng[.]at\"}"
+        },
+        {
+          "id": 51990, "timestamp": 1767343621, "source": "Zeek",
+          "description": "DNS TXT response",
+          "payload": "{\"timestamp\":1767343614,\"src_ip\":\"8.8.8.8\",\"src_port\":53,\"dst_ip\":\"192.168.22.7\",\"dst_port\":50264,\"prot\":\"UDP\",\"record_type\":\"TXT\",\"domain\":\"com1[.]gunsng[.]at\",\"data\":\"d2hvYW1p\"}"
+        }
+      ]
+    },
+    {
+      "id": 5, "timestamp": 1767344275, "severity": 2,
+      "briefdesc": "Password spraying detected",
+      "description": "This rule matches login attempts with nonexistent usernames",
+      "logs": [
+        {
+          "id": 63457, "timestamp": 1767343801, "source": "ACC-91-PC-3",
+          "description": "An account failed to log on",
+          "payload": "{\"EventID\":4625,\"EventName\":\"An account failed to log on\",\"Computer\":\"ACC-91-PC-3.company.cz\",\"Subject\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"-\",\"AccountDomain\":\"-\",\"LogonID\":0},\"LogonType\":3,\"AccountForWhichTheLogonFailed\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"ADMINISTRATOR\",\"AccountDomain\":\"\"},\"FailiureInformation\":{\"FailiureReason\":\"Unknown username or bad password\",\"Status\":3221225581,\"SubStatus\":3221225578},\"NetworkInformation\":{\"WorkstationName\":\"-\",\"SourceNetworkAddress\":\"156.11.1.198\"}}"
+        },
+        {
+          "id": 63470, "timestamp": 1767343806, "source": "ACC-91-PC-3",
+          "description": "An account failed to log on",
+          "payload": "{\"EventID\":4625,\"EventName\":\"An account failed to log on\",\"Computer\":\"ACC-91-PC-3.company.cz\",\"Subject\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"-\",\"AccountDomain\":\"-\",\"LogonID\":0},\"LogonType\":3,\"AccountForWhichTheLogonFailed\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"USER\",\"AccountDomain\":\"\"},\"FailiureInformation\":{\"FailiureReason\":\"Unknown username or bad password\",\"Status\":3221225581,\"SubStatus\":3221225578},\"NetworkInformation\":{\"WorkstationName\":\"-\",\"SourceNetworkAddress\":\"156.11.1.198\"}}"
+        },
+        {
+          "id": 63486, "timestamp": 1767343811, "source": "ACC-91-PC-3",
+          "description": "An account failed to log on",
+          "payload": "{\"EventID\":4625,\"EventName\":\"An account failed to log on\",\"Computer\":\"ACC-91-PC-3.company.cz\",\"Subject\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"-\",\"AccountDomain\":\"-\",\"LogonID\":0},\"LogonType\":3,\"AccountForWhichTheLogonFailed\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"USER1\",\"AccountDomain\":\"\"},\"FailiureInformation\":{\"FailiureReason\":\"Unknown username or bad password\",\"Status\":3221225581,\"SubStatus\":3221225578},\"NetworkInformation\":{\"WorkstationName\":\"-\",\"SourceNetworkAddress\":\"156.11.1.198\"}}"
+        },
+        {
+          "id": 63515, "timestamp": 1767343816, "source": "ACC-91-PC-3",
+          "description": "An account failed to log on",
+          "payload": "{\"EventID\":4625,\"EventName\":\"An account failed to log on\",\"Computer\":\"ACC-91-PC-3.company.cz\",\"Subject\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"-\",\"AccountDomain\":\"-\",\"LogonID\":0},\"LogonType\":3,\"AccountForWhichTheLogonFailed\":{\"SecurityID\":\"NULL SID\",\"AccountName\":\"WINDOWS\",\"AccountDomain\":\"\"},\"FailiureInformation\":{\"FailiureReason\":\"Unknown username or bad password\",\"Status\":3221225581,\"SubStatus\":3221225578},\"NetworkInformation\":{\"WorkstationName\":\"-\",\"SourceNetworkAddress\":\"156.11.1.198\"}}"
+        }
+      ]
+    }
+  ]
+}
