@@ -16,7 +16,7 @@ function SelectJson() {
   /**
    * PRESET LABS LIST
    */
-  const gitlist = ["", "first.json", "second.json"];
+  const gitlist = ["", "first.json", "second.json", "v2first.json"];
 
   const [url, setUrl] = useState("");
 

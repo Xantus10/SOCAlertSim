@@ -1,41 +1,17 @@
 import { useEffect, useState } from "react";
-import { Stack, Grid, Tooltip, Title, Paper, Button, Group, Text, Table, NativeSelect, Textarea } from "@mantine/core";
+import { Stack, Grid, Tooltip, Title, Paper, Button, Group, Text, Code, NativeSelect, Textarea, Box } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { FaEdit, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { SHA256 } from "crypto-js";
 
-import { severityString, severityColor, type Alert, type V1Json, type JsonECpart, type JsonECfull } from "../types/v1";
+import { severityString, severityColor } from "../types/v1";
+import type { V2Json, JsonECpart, JsonECfull, Alert, Log } from "../types/v2";
+
+import { type AlertEval, alertEvalString, alertEvalColor } from "./v1";
 
 
-export type AlertEval = -1 | 0 | 1;
-
-export function alertEvalString(e: AlertEval) {
-  switch (e) {
-    case -1:
-      return 'Not evaluated';
-    case 0:
-      return 'False positive';
-    case 1:
-      return 'True positive';
-    default:
-      return 'Undefined';
-  }
-}
-
-export function alertEvalColor(e: AlertEval) {
-  switch (e) {
-    case -1:
-      return 'inherit';
-    case 0:
-      return 'red';
-    case 1:
-      return 'green';
-    default:
-      return 'inherit';
-  }
-}
 
 
 interface GetFuncRet {
@@ -57,8 +33,30 @@ interface GetFuncRet {
 
 const evals: AlertEval[] = [-1, 0, 1];
 
+
+export function SingleLog( { logdata } : {logdata: Log} ) {
+  const {id, timestamp, source, description, payload} = logdata;
+
+
+
+  return (<>
+    <Paper bg={"dark.4"} key={id} p={5} mb={10}>
+      <Grid style={{borderBottom: '1px solid white'}} p={5}>
+        <Grid.Col span={1}><Text>{id}</Text></Grid.Col>
+        <Grid.Col span={2}><Text>{new Date(timestamp*1000).toLocaleString()}</Text></Grid.Col>
+        <Grid.Col span={2}><Code>{source}</Code></Grid.Col>
+        <Grid.Col span={7}><Text>{description}</Text></Grid.Col>
+      </Grid>
+      <Title order={5}>Payload</Title>
+      <Box p={5}>
+        <Text>{payload}</Text>
+      </Box>
+    </Paper>
+  </>);
+}
+
 export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertData: Alert, seval: AlertEval, setEval: (e: AlertEval)=>void, ta: string, setTa: (s: string)=>void} ) {
-  const { id, timestamp, severity, briefdesc, description, fields } = alertData;
+  const { id, timestamp, severity, briefdesc, description, logs } = alertData;
   
   const [detailsDisc, detailsDiscController] = useDisclosure(false);
   const [editDisc, editDiscController] = useDisclosure(false);
@@ -86,7 +84,16 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
       <Stack display={(detailsDisc) ? "inherit" : "none"} p={15}>
         <Title order={4}>Description</Title>
         <Text>{description}</Text>
-        <Table data={{body: Object.entries(fields)}} />
+        <Title order={4}>Related logs</Title>
+        <Grid style={{borderBottom: '1px solid white'}} p={5}>
+        <Grid.Col span={1}><Text>ID</Text></Grid.Col>
+        <Grid.Col span={2}><Text>Date</Text></Grid.Col>
+        <Grid.Col span={2}><Text>Source</Text></Grid.Col>
+        <Grid.Col span={7}><Text>Description</Text></Grid.Col>
+      </Grid>
+        {
+          logs.map((v) => <SingleLog logdata={v} />)
+        }
       </Stack>
       <Stack display={(editDisc) ? "inherit" : "none"} p={15}>
         <Title order={4}>Evaluate</Title>
@@ -99,7 +106,7 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
 }
 
 
-export function AlertsDisplay( { json }: {json: V1Json} ) {
+export function AlertsDisplay( { json }: {json: V2Json} ) {
   const [sevals, setEvals] = useState<{[id: Alert['id']]: AlertEval}>(Object.fromEntries(json.alerts.map((v) => [v.id, -1])));
   const [tas, setTas] = useState<{[id: Alert['id']]: string}>(Object.fromEntries(json.alerts.map((v) => [v.id, ""])));
 

@@ -1,48 +1,34 @@
-
-/**
- * Severity of the alert  
- * `1 - Critical`  
- * `2 - High`  
- * `3 - Medium`  
- * `4 - Low`  
- */
-export type Severity = 1 | 2 | 3 | 4;
+import type { Severity } from "./v1";
 
 
-export function severityString(sev: Severity) {
-  switch (sev) {
-    case 1:
-      return 'Critical';
-    case 2:
-      return 'High';
-    case 3:
-      return 'Medium';
-    case 4:
-      return 'Low';
-    default:
-      return 'Undefined'
-  }
-}
+export interface Log {
+  /**
+   * Id of the log
+   */
+  id: number;
 
-export function severityColor(sev: Severity) {
-  switch (sev) {
-    case 1:
-      return 'red';
-    case 2:
-      return 'orange';
-    case 3:
-      return 'yellow';
-    case 4:
-      return 'lightgreen';
-    default:
-      return 'white'
-  }
-}
+  /**
+   * UNIX Timestamp
+   */
+  timestamp: number;
+
+  /**
+   * Source of the log
+   */
+  source: string;
+
+  /**
+   * Brief description to display
+   */
+  description: string;
+
+  /**
+   * Full raw payload of the log
+   */
+  payload: string;
+};
 
 
-/**
- * One alert data
- */
 export interface Alert {
   /**
    * Id of the alert (Should be unique)
@@ -70,9 +56,9 @@ export interface Alert {
   description: string;
 
   /**
-   * An object of fields to include in alert (src_ip, process_name, etc.)
+   * Array of logs related to the alert
    */
-  fields: {[fieldName: string]: string}
+  logs: Log[];
 };
 
 /**
@@ -82,7 +68,7 @@ export interface Json {
   /**
    * Version of the schema
    */
-  version: 1;
+  version: 2;
 
   /**
    * Name of the lab
@@ -135,4 +121,4 @@ export interface JsonECfull extends Json {
   solution: string[];
 };
 
-export type V1Json = Json | JsonECpart | JsonECfull;
+export type V2Json = Json | JsonECpart | JsonECfull;
