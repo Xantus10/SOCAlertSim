@@ -24,6 +24,8 @@ This is an array of alerts, alerts in v1 feature the following:
 
 `description - a longer and more detailed description of the alert (alert rule)`
 
+`mitre - an array of strings of MITRE IDs that have some relation to the alert (Include the T, so for example T1190, T1595.003, ...)`
+
 `fields - the core of triage, this is an object of key-value pairs with data for the triage (like {ip: "192.0.2.1"})`
 
 ## Optional fields

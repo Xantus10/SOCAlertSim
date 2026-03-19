@@ -70,6 +70,11 @@ export interface Alert {
   description: string;
 
   /**
+   * List of MITRE IDs
+   */
+  mitre: string[];
+
+  /**
    * An object of fields to include in alert (src_ip, process_name, etc.)
    */
   fields: {[fieldName: string]: string}

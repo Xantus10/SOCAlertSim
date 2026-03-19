@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Stack, Grid, Tooltip, Title, Paper, Button, Group, Text, Table, NativeSelect, Textarea } from "@mantine/core";
+import { Stack, Grid, Tooltip, Title, Paper, Button, Group, Text, Table, NativeSelect, Textarea, Anchor } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { FaEdit, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
@@ -58,7 +58,7 @@ interface GetFuncRet {
 const evals: AlertEval[] = [-1, 0, 1];
 
 export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertData: Alert, seval: AlertEval, setEval: (e: AlertEval)=>void, ta: string, setTa: (s: string)=>void} ) {
-  const { id, timestamp, severity, briefdesc, description, fields } = alertData;
+  const { id, timestamp, severity, briefdesc, description, mitre, fields } = alertData;
   
   const [detailsDisc, detailsDiscController] = useDisclosure(false);
   const [editDisc, editDiscController] = useDisclosure(false);
@@ -86,6 +86,14 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
       <Stack display={(detailsDisc) ? "inherit" : "none"} p={15}>
         <Title order={4}>Description</Title>
         <Text>{description}</Text>
+        <Title order={4}>MITRE</Title>
+        <Stack>
+          {
+            mitre.map((val) => {
+              return (<Anchor href={`https://attack.mitre.org/techniques/${val.replace('.', '/')}/`} target="_blank">{val}</Anchor>)
+            })
+          }
+        </Stack>
         <Table data={{body: Object.entries(fields)}} />
       </Stack>
       <Stack display={(editDisc) ? "inherit" : "none"} p={15}>
