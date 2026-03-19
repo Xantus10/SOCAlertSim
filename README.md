@@ -1,6 +1,6 @@
 # SOC Alert Sim
 
-A React.JS frontend-only app for simulating simple alert triage in SOC.
+A React.JS frontend-only app for simulating simple alert triage in SOC. You may access it [here](https://xantus10.github.io/SOCAlertSim/)
 
 This app basically just creates a pretty frontend around a JSON structure.
 
