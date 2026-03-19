@@ -19,6 +19,7 @@
       "id": 1, "timestamp": 1767616998, "severity": 1,
       "briefdesc": "TCP scanning detected",
       "description": "Matches various TCP scan characteristics, such as Connection scan, Silent scan, FIN scan and Xmas scan.",
+      "mitre": ["T1595"],
       "fields": {
         "src_ip": "192.168.136.48",
         "src_hostname": "MRK-405-PC-16",
@@ -34,6 +35,7 @@
       "id": 2, "timestamp": 1767617155, "severity": 2,
       "briefdesc": "Powershell execution using Base64 payload",
       "description": "Matches any command using powershell with -e, -enc or -EncodedCommand option as it is often indicator of malicious activity and masquerading attempts.",
+      "mitre": ["T1059.001", "T1027.010"],
       "fields": {
         "host_ip": "192.168.10.6",
         "hostname": "SRV-AD-1",
@@ -48,6 +50,7 @@
       "id": 3, "timestamp": 1767617855, "severity": 2,
       "briefdesc": "Suspicious executable payload in clipboard",
       "description": "Attackers can often exploit the human vector to make users copy and paste malicious commands into the Windows Run prompt (Win+R)",
+      "mitre": ["T1204.004", "T1059"],
       "fields": {
         "host_ip": "192.168.84.12",
         "hostname": "ACC-LAPTOP-5",
@@ -61,6 +64,7 @@
       "id": 4, "timestamp": 1767617955, "severity": 3,
       "briefdesc": "Possible C2 beacon activity",
       "description": "This rule detects periodic connection activity up to beaconing every 5 minutes. This is often a sign of C2 communication.",
+      "mitre": ["T1071"],
       "fields": {
         "host_ip": "192.168.10.3",
         "hostname": "SRV-WEB-2",
@@ -77,6 +81,7 @@
       "id": 5, "timestamp": 1767618123, "severity": 3,
       "briefdesc": "Possible web path / configuration file enumeration",
       "description": "This rule signifies and attacker trying to enumerate common paths for a web service (/wp-config.php, /backup.zip, etc.). This is detected by a spike in amount of 404 responses from the server.",
+      "mitre": ["T1595.003"],
       "fields": {
         "host_ip": "192.168.10.3",
         "hostname": "SRV-WEB-2",
@@ -92,6 +97,7 @@
       "id": 6, "timestamp": 1767619977, "severity": 4,
       "briefdesc": "Protocol over non-standard port",
       "description": "Attackers will often use non-standard ports for C2 communication to avoid detection.",
+      "mitre": ["T1571"],
       "fields": {
         "host_ip": "192.168.5.11",
         "hostname": "SWD-3-PC-5",
@@ -108,6 +114,7 @@
       "id": 7, "timestamp": 1767625555, "severity": 1,
       "briefdesc": "Possible Data Exfiltration",
       "description": "This rule matches anytime the amount of traffic from a device reaches over 3GB per day.",
+      "mitre": ["T1030"],
       "fields": {
         "host_ip": "192.168.11.2",
         "hostname": "CFR-ROOM-1",
@@ -123,6 +130,7 @@
       "id": 8, "timestamp": 1767725555, "severity": 3,
       "briefdesc": "Unusual User-Agent detected",
       "description": "This alert triggers when a request to a web server features an unusual User-Agent (defined through a list)",
+      "mitre": ["T1071.001", "T1190", "T1059"],
       "fields": {
         "host_ip": "192.168.10.2",
         "hostname": "SRV-WEB-1",
@@ -137,7 +145,8 @@
     {
       "id": 9, "timestamp": 1767725655, "severity": 4,
       "briefdesc": "A LNK file was created",
-      "description": "Alert triggers when a .lnk (windows shortcut) file is created. Lnk files can bne genuine, but can also serve for executing malicious payloads",
+      "description": "Alert triggers when a .lnk (windows shortcut) file is created. Lnk files can be genuine, but can also serve for executing malicious payloads",
+      "mitre": ["T1204.002", "T1059", "T1036", "T1027.012"],
       "fields": {
         "host_ip": "192.168.114.9",
         "hostname": "LEG-27-PC-6",
