@@ -80,6 +80,13 @@ export interface Alert {
   fields: {[fieldName: string]: string}
 };
 
+export interface PresetAlert extends Alert {
+  /**
+   * Real evaluation of the alert
+   */
+  eval: 'TP' | 'FP';
+}
+
 /**
  * Whole json structure
  */
