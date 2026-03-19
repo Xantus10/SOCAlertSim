@@ -87,7 +87,7 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
         <Title order={4}>Description</Title>
         <Text>{description}</Text>
         <Title order={4}>MITRE</Title>
-        <Stack>
+        <Stack w='fit-content'>
           {
             mitre.map((val) => {
               return (<Anchor href={`https://attack.mitre.org/techniques/${val.replace('.', '/')}/`} target="_blank">{val}</Anchor>)
