@@ -44,7 +44,7 @@
         "src_ip": "192.168.110.22",
         "src_hostname": "LAW-LAPTOP-7",
         "attempts_threshold": 5,
-        "attempts_made": 9
+        "attempts_made": 6
       }
     },
     {
