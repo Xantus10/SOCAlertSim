@@ -107,7 +107,7 @@
     {
       "id": 7, "timestamp": 1767911222, "severity": 4,
       "briefdesc": "A LNK file was created",
-      "description": "Alert triggers when a .lnk (windows shortcut) file is created. Lnk files can bne genuine, but can also serve for executing malicious payloads",
+      "description": "Alert triggers when a .lnk (windows shortcut) file is created. Lnk files can be genuine, but can also serve for executing malicious payloads",
       "mitre": ["T1204.002", "T1059", "T1036", "T1027.012"],
       "fields": {
         "host_ip": "192.168.114.9",
