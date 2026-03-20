@@ -40,20 +40,7 @@ export function severityColor(sev: Severity) {
 }
 
 
-/**
- * One alert data
- */
-export interface Alert {
-  /**
-   * Id of the alert (Should be unique)
-   */
-  id: number;
-
-  /**
-   * UNIX Timestamp (When was the alert triggered)
-   */
-  timestamp: number;
-
+interface UnchangingAlert {
   /**
    * Severity
    */
@@ -78,9 +65,25 @@ export interface Alert {
    * An object of fields to include in alert (src_ip, process_name, etc.)
    */
   fields: {[fieldName: string]: string}
+}
+
+/**
+ * One alert data
+ */
+export interface Alert extends UnchangingAlert {
+  /**
+   * Id of the alert (Should be unique)
+   */
+  id: number;
+
+  /**
+   * UNIX Timestamp (When was the alert triggered)
+   */
+  timestamp: number;
+
 };
 
-export interface PresetAlert extends Alert {
+export interface PresetAlert extends UnchangingAlert {
   /**
    * Real evaluation of the alert
    */
