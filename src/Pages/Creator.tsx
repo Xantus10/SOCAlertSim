@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { SHA256 } from "crypto-js";
 
 import type { PresetAlert as PresetAlertV1, JsonECfull } from "../Components/types/v1";
+import { MutableAlert } from "../Components/AlertDisplays/v1";
 
 type Presets = {[key: string]: PresetAlertV1[]}
 
@@ -55,6 +56,9 @@ export default function Creator() {
       </Stack>
       <Stack m={30} p={30} bd={"solid 1px white"} w="85vw">
         <TextInput label="Name of the exercise" value={exercise?.name} onChange={(e) => setExercise((old) => ({...old, name: e.currentTarget.value}))} />
+        {
+          exercise.alerts.map((val) => <MutableAlert alertData={val} changeField={} />)
+        }
       </Stack>
     </Group>
   );

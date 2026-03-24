@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Stack, Grid, Tooltip, Title, Paper, Button, Group, Text, Table, NativeSelect, Textarea, Anchor } from "@mantine/core";
+import { Stack, Grid, Tooltip, Title, Paper, Button, Group, Text, Table, NativeSelect, Textarea, Anchor, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { FaEdit, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
@@ -101,6 +101,44 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
         <NativeSelect value={seval} data={evals.map((val) => {return {label: alertEvalString(val), value: val.toString()}})} onChange={(e) => setEval(parseInt(e.currentTarget.value) as AlertEval)} />
         <Title order={4}>Analyst comment</Title>
         <Textarea value={ta} onChange={(e) => setTa(e.currentTarget.value)} rows={5} />
+      </Stack>
+    </Paper>
+  );
+}
+
+
+export function MutableAlert( { alertData, changeField } : {alertData: Alert, changeField: (field: keyof Alert['fields'], value: Alert['fields'][keyof Alert['fields']])=>void} ) {
+  const { id, timestamp, severity, briefdesc, description, mitre, fields } = alertData;
+  
+  const [detailsDisc, detailsDiscController] = useDisclosure(false);
+  
+  useEffect(() => {
+    detailsDiscController.close();
+  }, [alertData]);
+
+  return (
+    <Paper bg={"dark.6"} bd={`solid 1px ${severityColor(severity)}`} key={id}>
+      <Grid align="center" ta="center" p={15}>
+        <Grid.Col span={1}>{id}</Grid.Col>
+        <Grid.Col span={3}>{new Date(timestamp*1000).toLocaleString()}</Grid.Col>
+        <Grid.Col span={2} ta={'left'}>{severityString(severity)}</Grid.Col>
+        <Grid.Col span={4} ta={'left'}>{briefdesc}</Grid.Col>
+        <Grid.Col span={2}>
+          <Button onClick={detailsDiscController.toggle}>{ (detailsDisc) ? <IoIosArrowUp /> : <IoIosArrowDown />}</Button>
+        </Grid.Col>
+      </Grid>
+      <Stack display={(detailsDisc) ? "inherit" : "none"} p={15}>
+        <Title order={4}>Description</Title>
+        <Text>{description}</Text>
+        <Title order={4}>MITRE</Title>
+        <Stack w='fit-content'>
+          {
+            mitre.map((val) => {
+              return (<Anchor href={`https://attack.mitre.org/techniques/${val.replace('.', '/')}/`} target="_blank">{val}</Anchor>)
+            })
+          }
+        </Stack>
+        <Table data={{body: Object.entries(fields).map((val) => [<Text>{val[0]}</Text>, <TextInput value={val[1]} onChange={(e) => changeField(val[0], e.currentTarget.value)} />])}} />
       </Stack>
     </Paper>
   );
