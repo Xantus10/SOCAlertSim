@@ -37,8 +37,8 @@ export default function Creator() {
   const [evals, setEvals] = useState<AlertEval[]>([]);
 
   return (
-    <Group p="1rem" align="flex-start">
-      <Stack>
+    <Group align="flex-start">
+      <Stack pt="1rem">
         {
           Object.entries(preset).map(([category, alerts], ix) => {
             return (
