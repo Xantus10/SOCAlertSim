@@ -11,9 +11,9 @@ import './App.css'
 function App() {
   return (
       <>
-      <Header />
       <JsonProvider>
         <BrowserRouter basename='/SOCAlertSim'>
+          <Header />
           <Routes>
             <Route path='/' element={<AlertInspector />} />
             <Route path='/create' element={<Creator />} />
