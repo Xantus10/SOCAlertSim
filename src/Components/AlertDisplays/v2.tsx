@@ -6,10 +6,9 @@ import { FaEdit, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { SHA256 } from "crypto-js";
 
-import { severityString, severityColor } from "../types/v1";
+import { severityString, severityColor, alertEvalString, alertEvalColor, type AlertEval } from "../types/v1";
 import type { V2Json, JsonECpart, JsonECfull, Alert, Log } from "../types/v2";
 
-import { type AlertEval, alertEvalString, alertEvalColor } from "./v1";
 
 
 

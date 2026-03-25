@@ -6,36 +6,7 @@ import { FaEdit, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { SHA256 } from "crypto-js";
 
-import { severityString, severityColor, type Alert, type V1Json, type JsonECpart, type JsonECfull } from "../types/v1";
-
-
-export type AlertEval = -1 | 0 | 1;
-
-export function alertEvalString(e: AlertEval) {
-  switch (e) {
-    case -1:
-      return 'Not evaluated';
-    case 0:
-      return 'False positive';
-    case 1:
-      return 'True positive';
-    default:
-      return 'Undefined';
-  }
-}
-
-export function alertEvalColor(e: AlertEval) {
-  switch (e) {
-    case -1:
-      return 'inherit';
-    case 0:
-      return 'red';
-    case 1:
-      return 'green';
-    default:
-      return 'inherit';
-  }
-}
+import { severityString, severityColor, alertEvalColor, alertEvalString, evals, type AlertEval, type Alert, type V1Json, type JsonECpart, type JsonECfull } from "../types/v1";
 
 
 interface GetFuncRet {
@@ -54,8 +25,6 @@ interface GetFuncRet {
    */
   com: string;
 };
-
-const evals: AlertEval[] = [-1, 0, 1];
 
 export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertData: Alert, seval: AlertEval, setEval: (e: AlertEval)=>void, ta: string, setTa: (s: string)=>void} ) {
   const { id, timestamp, severity, briefdesc, description, mitre, fields } = alertData;
@@ -107,22 +76,19 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
 }
 
 
-export function MutableAlert( { alertData, changeField } : {alertData: Alert, changeField: (field: keyof Alert['fields'], value: Alert['fields'][keyof Alert['fields']])=>void} ) {
+export function MutableAlert( { alertData, evaluation, changeField } : {alertData: Alert, evaluation: AlertEval, changeField: (id: Alert['id'], field: keyof Alert['fields'], value: Alert['fields'][keyof Alert['fields']])=>void} ) {
   const { id, timestamp, severity, briefdesc, description, mitre, fields } = alertData;
   
   const [detailsDisc, detailsDiscController] = useDisclosure(false);
-  
-  useEffect(() => {
-    detailsDiscController.close();
-  }, [alertData]);
 
   return (
     <Paper bg={"dark.6"} bd={`solid 1px ${severityColor(severity)}`} key={id}>
       <Grid align="center" ta="center" p={15}>
         <Grid.Col span={1}>{id}</Grid.Col>
-        <Grid.Col span={3}>{new Date(timestamp*1000).toLocaleString()}</Grid.Col>
-        <Grid.Col span={2} ta={'left'}>{severityString(severity)}</Grid.Col>
+        <Grid.Col span={2}>{new Date(timestamp*1000).toLocaleString()}</Grid.Col>
+        <Grid.Col span={1} ta={'left'}>{severityString(severity)}</Grid.Col>
         <Grid.Col span={4} ta={'left'}>{briefdesc}</Grid.Col>
+        <Grid.Col span={2} c={alertEvalColor(evaluation)}>{alertEvalString(evaluation)}</Grid.Col>
         <Grid.Col span={2}>
           <Button onClick={detailsDiscController.toggle}>{ (detailsDisc) ? <IoIosArrowUp /> : <IoIosArrowDown />}</Button>
         </Grid.Col>
@@ -138,7 +104,7 @@ export function MutableAlert( { alertData, changeField } : {alertData: Alert, ch
             })
           }
         </Stack>
-        <Table data={{body: Object.entries(fields).map((val) => [<Text>{val[0]}</Text>, <TextInput value={val[1]} onChange={(e) => changeField(val[0], e.currentTarget.value)} />])}} />
+        <Table data={{body: Object.entries(fields).map((val) => [<Text>{val[0]}</Text>, <TextInput value={val[1]} onChange={(e) => changeField(id, val[0], e.currentTarget.value)} />])}} />
       </Stack>
     </Paper>
   );

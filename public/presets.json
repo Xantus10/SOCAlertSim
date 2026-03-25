@@ -1,0 +1,52 @@
+{
+  "Login": [
+    {
+      "severity": 2,
+      "briefdesc": "Brute-force login attempt detected",
+      "description": "This alert triggers, when a certain limit of unsuccessful login attempts per 5 minutes is reached",
+      "mitre": ["T1110.001"],
+      "fields": {
+        "host_ip": "192.168.122.27",
+        "hostname": "HR-101-PC-13",
+        "department": "Human Resources",
+        "protocol": "RDP",
+        "username": "Administrator",
+        "src_ip": "91.16.44.182",
+        "src_hostname": "Unknown (Outside IP)",
+        "attempts_threshold": 5,
+        "attempts_made": 3720
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 2,
+      "briefdesc": "Brute-force login attempt detected",
+      "description": "This alert triggers, when a certain limit of unsuccessful login attempts per 5 minutes is reached",
+      "mitre": ["T1110.001"],
+      "fields": {
+        "host_ip": "192.168.114.6",
+        "hostname": "LEG-26-PC-3",
+        "department": "Legal department",
+        "protocol": "SSH",
+        "username": "JohnsonMat",
+        "src_ip": "192.168.110.22",
+        "src_hostname": "LAW-LAPTOP-7",
+        "attempts_threshold": 5,
+        "attempts_made": 6
+      },
+      "eval": "FP"
+    }
+  ],
+  "Web": [
+
+  ],
+  "EDR - Files": [
+
+  ],
+  "EDR - Execution": [
+
+  ],
+  "Network": [
+
+  ]
+}

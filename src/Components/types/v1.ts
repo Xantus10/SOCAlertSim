@@ -151,3 +151,34 @@ export interface JsonECfull extends Json {
 };
 
 export type V1Json = Json | JsonECpart | JsonECfull;
+
+
+export type AlertEval = -1 | 0 | 1;
+
+export const evals: AlertEval[] = [-1, 0, 1];
+
+export function alertEvalString(e: AlertEval) {
+  switch (e) {
+    case -1:
+      return 'Not evaluated';
+    case 0:
+      return 'False positive';
+    case 1:
+      return 'True positive';
+    default:
+      return 'Undefined';
+  }
+}
+
+export function alertEvalColor(e: AlertEval) {
+  switch (e) {
+    case -1:
+      return 'inherit';
+    case 0:
+      return 'red';
+    case 1:
+      return 'green';
+    default:
+      return 'inherit';
+  }
+}
