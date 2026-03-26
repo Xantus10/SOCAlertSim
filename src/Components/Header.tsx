@@ -14,10 +14,10 @@ export default function Header() {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item onClick={() => navigate('/')}>
-              <Button fullWidth>Alert sim</Button>
+              <Button fullWidth>Alert simulation</Button>
             </Menu.Item>
             <Menu.Item onClick={() => navigate('/create')}>
-              <Button fullWidth>Create new</Button>
+              <Button fullWidth>Creator</Button>
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
