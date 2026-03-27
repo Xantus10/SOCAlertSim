@@ -11,25 +11,27 @@ function AlertInspector() {
   const json = useJson();
 
   return (
-    <Group p="1rem" align="flex-start">
-      <Box>
-        <SelectJson />
-      </Box>
-      <Box m={30} p={30} bd={"solid 1px white"} w="85vw">
-        {
-          (!json) ?
-            <Text size="lg">Please select a JSON</Text>
-          :
-          (json.version === 1) ?
-            <ADv1 json={json} />
-          :
-          (json.version === 2) ?
-            <ADv2 json={json} />
-          :
-            <Text size="lg">Unrecognized json!</Text>
-        }
-      </Box>
-    </Group>
+    <>
+      <Group p="1rem" align="flex-start" m="1rem">
+        <Box>
+          <SelectJson />
+        </Box>
+        <Box m={30} p={30} bd={"solid 1px white"} w="85vw">
+          {
+            (!json) ?
+              <Text size="lg">Please select a JSON</Text>
+            :
+            (json.version === 1) ?
+              <ADv1 json={json} />
+            :
+            (json.version === 2) ?
+              <ADv2 json={json} />
+            :
+              <Text size="lg">Unrecognized json!</Text>
+          }
+        </Box>
+      </Group>
+    </>
   );
 }
 

@@ -70,7 +70,8 @@ export default function Creator() {
   }
 
   return (
-    <Group align="flex-start">
+    <>
+      <Group align="flex-start" m="1rem">
       <Stack pt="1rem">
         {
           Object.entries(preset).map(([category, alerts], ix) => {
@@ -104,5 +105,6 @@ export default function Creator() {
         }
       </Stack>
     </Group>
+    </>
   );
 }

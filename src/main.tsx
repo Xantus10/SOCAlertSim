@@ -1,14 +1,15 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import { createTheme, MantineProvider } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
-import App from './App.tsx'
 
 import '@mantine/core/styles.css'
 import '@mantine/notifications/styles.css'
 
 import './index.css'
 
+import App from './App.tsx'
 
 const theme = createTheme({
   components: {
@@ -34,8 +35,10 @@ const theme = createTheme({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <MantineProvider forceColorScheme='dark' theme={theme}>
-      <App />
-      <Notifications position='bottom-right' autoClose={5000} />
+      <BrowserRouter basename='/SOCAlertSim'>
+        <App />
+        <Notifications position='bottom-right' autoClose={5000} />
+      </BrowserRouter>
     </MantineProvider>
   </StrictMode>,
 )

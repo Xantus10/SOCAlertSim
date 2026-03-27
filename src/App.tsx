@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 import Header from './Components/Header'
 import { JsonProvider } from './Components/JsonContext'
@@ -6,19 +6,15 @@ import { JsonProvider } from './Components/JsonContext'
 import AlertInspector from './Pages/AlertInspector'
 import Creator from './Pages/Creator'
 
-import './App.css'
-
 function App() {
   return (
       <>
       <JsonProvider>
-        <BrowserRouter basename='/SOCAlertSim'>
-          <Header />
-          <Routes>
-            <Route path='/' element={<AlertInspector />} />
-            <Route path='/create' element={<Creator />} />
-          </Routes>
-        </BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path='/' element={<AlertInspector />} />
+          <Route path='/create' element={<Creator />} />
+        </Routes>
       </JsonProvider>
       </>
     )
