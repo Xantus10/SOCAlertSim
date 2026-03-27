@@ -1,4 +1,5 @@
 import { Button, Group, Menu, Stack, TextInput, NativeSelect } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { useState, useEffect } from "react";
 import { SHA256 } from "crypto-js";
 
@@ -51,6 +52,23 @@ export default function Creator() {
     }
   }, [evals, ech])
 
+  function exportAnswers() {
+    const blob: Blob = new Blob([JSON.stringify(exercise)], { type: 'application/json' });
+
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    const name = `${(exercise.name.length > 0) ? exercise.name : 'exercise'}.json`;
+    a.download = name;
+
+    document.body.appendChild(a);
+    a.click();
+    notifications.show({message: `Answers exported to ${name}`});
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }
+
   return (
     <Group align="flex-start">
       <Stack pt="1rem">
@@ -78,6 +96,7 @@ export default function Creator() {
         }
       </Stack>
       <Stack m={30} p={30} bd={"solid 1px white"} w="85vw">
+        <Button onClick={exportAnswers}>Export</Button>
         <TextInput label="Name of the exercise" value={exercise.name} onChange={(e) => setExercise({...exercise, name: e.currentTarget.value})} />
         <NativeSelect label="Error checking" data={['None', 'Partial', 'Full']} value={ech} onChange={(e) => {setEch(e.currentTarget.value as ECH)}} />
         {
