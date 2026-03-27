@@ -1,4 +1,5 @@
-import { Button, Group, Menu, Stack, TextInput, NativeSelect } from "@mantine/core";
+import { Button, Group, Menu, Stack, TextInput, NativeSelect, Title, Modal } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { useState, useEffect } from "react";
 import { SHA256 } from "crypto-js";
@@ -69,10 +70,14 @@ export default function Creator() {
     window.URL.revokeObjectURL(url);
   }
 
+  const [newDisc, newDiscController] = useDisclosure(false);
+
   return (
     <>
       <Group align="flex-start" m="1rem">
       <Stack pt="1rem">
+        <Button onClick={newDiscController.open}>New</Button>
+        <Title order={3}>Presets</Title>
         {
           Object.entries(preset).map(([category, alerts], ix) => {
             return (
@@ -105,6 +110,9 @@ export default function Creator() {
         }
       </Stack>
     </Group>
+    <Modal opened={newDisc} onClose={newDiscController.close} title="New alert">
+      
+    </Modal>
     </>
   );
 }
