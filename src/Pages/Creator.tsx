@@ -1,8 +1,8 @@
-import { Button, Group, Menu, Stack, TextInput } from "@mantine/core";
+import { Button, Group, Menu, Stack, TextInput, NativeSelect } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { SHA256 } from "crypto-js";
 
-import type { PresetAlert as PresetAlertV1, JsonECfull, Alert, AlertEval } from "../Components/types/v1";
+import type { PresetAlert as PresetAlertV1, V1Json as Json, Alert, AlertEval } from "../Components/types/v1";
 import { MutableAlert } from "../Components/AlertDisplays/v1";
 
 type Presets = {[key: string]: PresetAlertV1[]}
@@ -26,15 +26,30 @@ export default function Creator() {
     let {eval: evalValue, ...raw} = preset;
     let neweval = (evalValue === 'FP') ? '0' : '1';
     setEvals((old) => ([...old, parseInt(neweval) as AlertEval]));
-    setExercise((old) => ({...old, alerts: [...old.alerts, {...raw, id: old.alerts.length+1, timestamp: Math.round(Date.now()/1000)}], solution: [...old.solution, SHA256(old.solution[old.solution.length-1] + neweval).toString()]}))
+    setExercise((old) => ({...old, alerts: [...old.alerts, {...raw, id: old.alerts.length+1, timestamp: Math.round(Date.now()/1000)}]}))
   }
 
   function changeField(id: Alert['id'], field: keyof Alert['fields'], value: Alert['fields'][keyof Alert['fields']]) {
     setExercise((old) => ({...old, alerts: old.alerts.map((val) => (val.id === id) ? {...val, fields: Object.fromEntries(Object.entries(val.fields).map((fld) => (fld[0] === field) ? [field, value] : fld))} : val)}))
   }
 
-  const [exercise, setExercise] = useState<JsonECfull>({name: "", version: 1, alerts: [], ec: "full", salt: SHA256(Date.now().toString()).toString(), solution: []});
+  const [exercise, setExercise] = useState<Json>({name: "", version: 1, alerts: [], ec: "full", salt: SHA256(Date.now().toString()).toString(), solution: []});
   const [evals, setEvals] = useState<AlertEval[]>([]);
+  type ECH = 'None' | 'Partial' | 'Full';
+  const [ech, setEch] = useState<ECH>('Full');
+
+  useEffect(() => {
+    if (ech === 'Full') {
+      let salt = SHA256(Date.now().toString()).toString()
+      let sols: string[] = [];
+      evals.forEach((val, ix) => {sols.push((ix === 0) ? SHA256(salt + val.toString).toString() : SHA256(sols[ix-1] + val.toString).toString())});
+      setExercise((old) => ({...old, ec: 'full', salt: salt, solution: sols}));
+    } else if (ech === 'Partial') {
+      setExercise((old) => ({...old, ec: 'partial', salt: '', solution: SHA256(evals.map((val) => val.toString()).join()).toString()}));
+    } else {
+      setExercise((old) => ({...old, ec: 'none', salt: '', solution: ''}));
+    }
+  }, [evals, ech])
 
   return (
     <Group align="flex-start">
@@ -64,6 +79,7 @@ export default function Creator() {
       </Stack>
       <Stack m={30} p={30} bd={"solid 1px white"} w="85vw">
         <TextInput label="Name of the exercise" value={exercise.name} onChange={(e) => setExercise({...exercise, name: e.currentTarget.value})} />
+        <NativeSelect label="Error checking" data={['None', 'Partial', 'Full']} value={ech} onChange={(e) => {setEch(e.currentTarget.value as ECH)}} />
         {
           exercise.alerts.map((val, ix) => <MutableAlert alertData={val} evaluation={evals[ix]} changeField={changeField} key={ix} />)
         }

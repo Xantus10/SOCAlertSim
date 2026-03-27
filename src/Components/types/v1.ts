@@ -111,6 +111,26 @@ export interface Json {
 };
 
 /**
+ * Json with no error checking
+ */
+export interface JsonECnone extends Json {
+  /**
+   * Indicates support for error checking
+   */
+  ec: 'none';
+
+  /**
+   * Empty
+   */
+  salt: '';
+
+  /**
+   * Empty
+   */
+  solution: '';
+};
+
+/**
  * Json enriched with partial error checking
  */
 export interface JsonECpart extends Json {
@@ -118,6 +138,11 @@ export interface JsonECpart extends Json {
    * Indicates support for error checking
    */
   ec: 'partial';
+
+  /**
+   * Empty
+   */
+  salt: '';
 
   /**
    * Hash for error checking
@@ -150,7 +175,7 @@ export interface JsonECfull extends Json {
   solution: string[];
 };
 
-export type V1Json = Json | JsonECpart | JsonECfull;
+export type V1Json = JsonECnone | JsonECpart | JsonECfull;
 
 
 export type AlertEval = -1 | 0 | 1;

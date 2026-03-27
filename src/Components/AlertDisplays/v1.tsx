@@ -182,7 +182,7 @@ export function AlertsDisplay( { json }: {json: V1Json} ) {
     notifications.show({message: "Correct!", color: "green", icon: <FaCheckCircle />});
   }
 
-  if ('ec' in json) {
+  if (json.ec !== 'none') {
     pec = <Button onClick={checkAnswersPart}>Check</Button>
     if (json.ec === 'full') {
       pec = <Button onClick={() => checkAnswersFull(false)}>Check</Button>
