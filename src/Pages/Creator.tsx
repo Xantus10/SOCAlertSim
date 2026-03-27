@@ -43,7 +43,7 @@ export default function Creator() {
     if (ech === 'Full') {
       let salt = SHA256(Date.now().toString()).toString()
       let sols: string[] = [];
-      evals.forEach((val, ix) => {sols.push((ix === 0) ? SHA256(salt + val.toString).toString() : SHA256(sols[ix-1] + val.toString).toString())});
+      evals.forEach((val, ix) => {sols.push((ix === 0) ? SHA256(salt + val.toString()).toString() : SHA256(sols[ix-1] + val.toString()).toString())});
       setExercise((old) => ({...old, ec: 'full', salt: salt, solution: sols}));
     } else if (ech === 'Partial') {
       setExercise((old) => ({...old, ec: 'partial', salt: '', solution: SHA256(evals.map((val) => val.toString()).join()).toString()}));
