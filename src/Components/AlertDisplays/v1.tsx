@@ -38,6 +38,7 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
   }, [alertData]);
 
   return (
+    <>
     <Paper bg={"dark.6"} bd={`solid 1px ${severityColor(severity)}`} key={id}>
       <Grid align="center" ta="center" p={15}>
         <Grid.Col span={1}>{id}</Grid.Col>
@@ -72,6 +73,7 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
         <Textarea value={ta} onChange={(e) => setTa(e.currentTarget.value)} rows={5} />
       </Stack>
     </Paper>
+    </>
   );
 }
 
@@ -82,6 +84,7 @@ export function MutableAlert( { alertData, evaluation, changeField } : {alertDat
   const [detailsDisc, detailsDiscController] = useDisclosure(false);
 
   return (
+    <>
     <Paper bg={"dark.6"} bd={`solid 1px ${severityColor(severity)}`} key={id}>
       <Grid align="center" ta="center" p={15}>
         <Grid.Col span={1}>{id}</Grid.Col>
@@ -107,6 +110,7 @@ export function MutableAlert( { alertData, evaluation, changeField } : {alertDat
         <Table data={{body: Object.entries(fields).map((val) => [<Text>{val[0]}</Text>, <TextInput value={val[1]} onChange={(e) => changeField(id, val[0], e.currentTarget.value)} />])}} />
       </Stack>
     </Paper>
+    </>
   );
 }
 
@@ -191,6 +195,7 @@ export function AlertsDisplay( { json }: {json: V1Json} ) {
   }
 
   return (
+    <>
     <Stack gap={10}>
       <Group justify="space-between">
         <Title order={3}>{json.name}</Title>
@@ -202,14 +207,15 @@ export function AlertsDisplay( { json }: {json: V1Json} ) {
             {fec}
         </Group>
       </Group>
-      <Grid align="center" ta="center" p={5}>
-        <Grid.Col span={1} bd={"solid 1px white"}>ID</Grid.Col>
-        <Grid.Col span={2} bd={"solid 1px white"}>Timestamp</Grid.Col>
-        <Grid.Col span={1} bd={"solid 1px white"}>Severity</Grid.Col>
-        <Grid.Col span={4} bd={"solid 1px white"}>Brief description</Grid.Col>
-        <Grid.Col span={2} bd={"solid 1px white"}>Status</Grid.Col>
+      <Grid align="center" ta="center" p={5} bd={"solid 1px white"}>
+        <Grid.Col span={1}>ID</Grid.Col>
+        <Grid.Col span={2}>Timestamp</Grid.Col>
+        <Grid.Col span={1}>Severity</Grid.Col>
+        <Grid.Col span={4}>Brief description</Grid.Col>
+        <Grid.Col span={2}>Status</Grid.Col>
       </Grid>
       {json.alerts.map((val) => (<SingleAlert alertData={val} seval={sevals[val.id]} setEval={(e: AlertEval) => setEval(val.id, e)} ta={tas[val.id]} setTa={(s: string) => setTa(val.id, s)} />))}
     </Stack>
+    </>
   );
 }

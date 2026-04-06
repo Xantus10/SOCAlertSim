@@ -3,11 +3,10 @@ import { Button, Modal, Text, FileInput, TextInput, NativeSelect } from "@mantin
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 
-import { useSetJson } from "./JsonContext";
+import type { JsonSchema } from "./types/JsonSchema";
 
 
-function SelectJson() {
-  const setJson = useSetJson();
+function SelectJson({ setJson } : { setJson: React.Dispatch<React.SetStateAction<JsonSchema | null>> }) {
   
   const [disc, discController] = useDisclosure(false);
 

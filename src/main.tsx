@@ -22,22 +22,16 @@ const theme = createTheme({
           deg: 45
         }
       }
-    },
-    Modal: {
-      defaultProps: {
-         withinPortal: false
-      }
     }
   }
 });
 
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <MantineProvider forceColorScheme='dark' theme={theme}>
+    <MantineProvider theme={theme} forceColorScheme='dark'>
       <BrowserRouter basename='/SOCAlertSim'>
         <App />
-        <Notifications position='bottom-right' autoClose={5000} />
+        <Notifications position='bottom-right' />
       </BrowserRouter>
     </MantineProvider>
   </StrictMode>,

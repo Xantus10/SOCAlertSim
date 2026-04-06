@@ -66,6 +66,7 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
   }, [alertData]);
 
   return (
+    <>
     <Paper bg={"dark.6"} bd={`solid 1px ${severityColor(severity)}`} key={id}>
       <Grid align="center" ta="center" p={15}>
         <Grid.Col span={1}>{id}</Grid.Col>
@@ -101,6 +102,7 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
         <Textarea value={ta} onChange={(e) => setTa(e.currentTarget.value)} rows={5} />
       </Stack>
     </Paper>
+    </>
   );
 }
 
@@ -185,6 +187,7 @@ export function AlertsDisplay( { json }: {json: V2Json} ) {
   }
 
   return (
+    <>
     <Stack gap={10}>
       <Group justify="space-between">
         <Title order={3}>{json.name}</Title>
@@ -205,5 +208,6 @@ export function AlertsDisplay( { json }: {json: V2Json} ) {
       </Grid>
       {json.alerts.map((val) => (<SingleAlert alertData={val} seval={sevals[val.id]} setEval={(e: AlertEval) => setEval(val.id, e)} ta={tas[val.id]} setTa={(s: string) => setTa(val.id, s)} />))}
     </Stack>
+    </>
   );
 }

@@ -1,20 +1,21 @@
-import { Box, Text, Group } from "@mantine/core";
+import { Group, Box, Text } from "@mantine/core"
+import { useState } from "react";
 
 import SelectJson from "../Components/SelectJson";
-import { useJson } from "../Components/JsonContext";
+import type { JsonSchema } from "../Components/types/JsonSchema";
 
 import { AlertsDisplay as ADv1 } from "../Components/AlertDisplays/v1";
 import { AlertsDisplay as ADv2 } from "../Components/AlertDisplays/v2";
 
 
-function AlertInspector() {
-  const json = useJson();
-
+export default function AlertInspector() {
+  const [json, setJson] = useState<JsonSchema | null>(null)
+  
   return (
     <>
       <Group p="1rem" align="flex-start" m="1rem">
         <Box>
-          <SelectJson />
+          <SelectJson setJson={setJson} />
         </Box>
         <Box m={30} p={30} bd={"solid 1px white"} w="85vw">
           {
@@ -34,5 +35,3 @@ function AlertInspector() {
     </>
   );
 }
-
-export default AlertInspector;

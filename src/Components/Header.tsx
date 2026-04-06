@@ -5,6 +5,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   return (
+    <>
     <Paper bd="solid 1px white" p="10px" m="1rem">
       <Group justify='space-between'>
         <Title order={2}>SOC Alert Sim</Title>
@@ -23,5 +24,6 @@ export default function Header() {
         </Menu>
       </Group>
     </Paper>
+    </>
   );
 }

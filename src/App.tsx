@@ -1,23 +1,21 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from "react-router-dom"
 
-import Header from './Components/Header'
-import { JsonProvider } from './Components/JsonContext'
+import Header from "./Components/Header"
 
-import AlertInspector from './Pages/AlertInspector'
-import Creator from './Pages/Creator'
+import AlertInspector from "./Pages/AlertInspector"
+import Creator from "./Pages/Creator"
 
 function App() {
+
   return (
-      <>
-      <JsonProvider>
-        <Header />
-        <Routes>
-          <Route path='/' element={<AlertInspector />} />
-          <Route path='/create' element={<Creator />} />
-        </Routes>
-      </JsonProvider>
-      </>
-    )
+    <>
+      <Header />
+      <Routes>
+        <Route path='/' element={<AlertInspector />} />
+        <Route path='/create' element={<Creator />} />
+      </Routes>
+    </>
+  )
 }
 
-export default App;
+export default App
