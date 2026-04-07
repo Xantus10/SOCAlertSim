@@ -4,6 +4,7 @@ import { notifications } from "@mantine/notifications";
 import { useState, useEffect } from "react";
 import { SHA256 } from "crypto-js";
 
+import NewAlert from "../Components/NewAlert";
 import type { PresetAlert as PresetAlertV1, V1Json as Json, Alert, AlertEval } from "../Components/types/v1";
 import { MutableAlert } from "../Components/AlertDisplays/v1";
 
@@ -111,7 +112,7 @@ export default function Creator() {
       </Stack>
     </Group>
     <Modal opened={newDisc} onClose={newDiscController.close} title="New alert">
-      
+      <NewAlert addFunction={appendPreset} closeFunction={newDiscController.close} />
     </Modal>
     </>
   );
