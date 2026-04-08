@@ -33,7 +33,18 @@ export default function Creator() {
   }
 
   function changeField(id: Alert['id'], field: keyof Alert['fields'], value: Alert['fields'][keyof Alert['fields']]) {
-    setExercise((old) => ({...old, alerts: old.alerts.map((val) => (val.id === id) ? {...val, fields: Object.fromEntries(Object.entries(val.fields).map((fld) => (fld[0] === field) ? [field, value] : fld))} : val)}))
+    setExercise((old) => ({...old, alerts: old.alerts.map((val) => {
+      if (val.id !== id) return val;
+
+      if (value.startsWith('\xaa\xbb')) {
+        if (value.endsWith('DELETE')) {
+          const {[field]: _, ...rest} = val.fields
+          return {...val, fields: rest}
+        }
+      }
+
+      return {...val, fields: {...val.fields, [field]: value}}
+    })}))
   }
 
   const [exercise, setExercise] = useState<Json>({name: "", version: 1, alerts: [], ec: "full", salt: SHA256(Date.now().toString()).toString(), solution: []});
