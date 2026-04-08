@@ -110,7 +110,7 @@ export function MutableAlert( { alertData, evaluation, changeField } : {alertDat
           }
         </Stack>
         <Table data={{body: Object.entries(fields).map((val) => [<Text>{val[0]}</Text>, <TextInput value={val[1]} onChange={(e) => changeField(id, val[0], e.currentTarget.value)} />, <Button onClick={() => changeField(id, val[0], '\xaa\xbbDELETE')}>Remove</Button>])
-        , foot: [<TextInput placeholder='New Field' value={newFieldName} onChange={(e) => setNewFieldName(e.currentTarget.value)} />, <Button onClick={() => changeField(id, newFieldName, 'Enter Value')}>Add</Button>]}} />
+        , foot: [<TextInput placeholder='New Field' value={newFieldName} onChange={(e) => setNewFieldName(e.currentTarget.value)} />, <Button onClick={() => {changeField(id, newFieldName, 'Enter Value'); setNewFieldName('')}}>Add</Button>]}} />
       </Stack>
     </Paper>
     </>

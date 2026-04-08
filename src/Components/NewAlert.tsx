@@ -1,4 +1,4 @@
-import { Button, NativeSelect, TextInput } from "@mantine/core";
+import { Button, NativeSelect, TagsInput, TextInput } from "@mantine/core";
 import { useState } from "react";
 import { severities, severityString, type PresetAlert, type Severity } from "./types/v1";
 
@@ -12,6 +12,7 @@ export default function NewAlert( { addFunction, closeFunction }: { addFunction:
       <NativeSelect label='Severity' data={severities.map((val) => ({label: severityString(val), value: val.toString()}))} value={newAlert.severity} onChange={(e) => {setNewAlert({...newAlert, severity: parseInt(e.currentTarget.value) as Severity})}} />
       <TextInput label='Brief description (name of the alert)' value={newAlert.briefdesc} onChange={(e) => {setNewAlert({...newAlert, briefdesc: e.currentTarget.value})}} />
       <TextInput label='Detailed description' value={newAlert.description} onChange={(e) => {setNewAlert({...newAlert, description: e.currentTarget.value})}} />
+      <TagsInput label='Enter MITRE techniques' description='Enter technique ID beginning with T' placeholder='Press ENTER after entering a technique' value={newAlert.mitre} onChange={(val) => setNewAlert({...newAlert, mitre: val})} />
       <Button onClick={() => {addFunction(newAlert); closeFunction()}}>Add</Button>
     </>
   );
