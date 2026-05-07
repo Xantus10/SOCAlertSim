@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Stack, Grid, Tooltip, Title, Paper, Button, Group, Text, Table, NativeSelect, Textarea, Anchor, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
-import { FaEdit, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
+import { FaEdit, FaCheckCircle, FaExclamationTriangle, FaTrashAlt } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { SHA256 } from "crypto-js";
 
@@ -78,7 +78,7 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
 }
 
 
-export function MutableAlert( { alertData, evaluation, changeField } : {alertData: Alert, evaluation: AlertEval, changeField: (id: Alert['id'], field: keyof Alert['fields'], value: Alert['fields'][keyof Alert['fields']])=>void} ) {
+export function MutableAlert( { alertData, evaluation, changeField, removeAlert } : {alertData: Alert, evaluation: AlertEval, changeField: (id: Alert['id'], field: keyof Alert['fields'], value: Alert['fields'][keyof Alert['fields']]) => void, removeAlert: (id: Alert['id']) => void} ) {
   const { id, timestamp, severity, briefdesc, description, mitre, fields } = alertData;
   
   const [detailsDisc, detailsDiscController] = useDisclosure(false);
@@ -95,7 +95,10 @@ export function MutableAlert( { alertData, evaluation, changeField } : {alertDat
         <Grid.Col span={4} ta={'left'}>{briefdesc}</Grid.Col>
         <Grid.Col span={2} c={alertEvalColor(evaluation)}>{alertEvalString(evaluation)}</Grid.Col>
         <Grid.Col span={2}>
-          <Button onClick={detailsDiscController.toggle}>{ (detailsDisc) ? <IoIosArrowUp /> : <IoIosArrowDown />}</Button>
+          <Group justify="space-around">
+            <Button onClick={detailsDiscController.toggle}>{ (detailsDisc) ? <IoIosArrowUp /> : <IoIosArrowDown />}</Button>
+            <Button onClick={() => removeAlert(id)}><FaTrashAlt /></Button>
+          </Group>
         </Grid.Col>
       </Grid>
       <Stack display={(detailsDisc) ? "inherit" : "none"} p={15}>

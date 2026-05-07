@@ -29,7 +29,12 @@ export default function Creator() {
     let {eval: evalValue, ...raw} = preset;
     let neweval = (evalValue === 'FP') ? '0' : '1';
     setEvals((old) => ([...old, parseInt(neweval) as AlertEval]));
-    setExercise((old) => ({...old, alerts: [...old.alerts, {...raw, id: old.alerts.length+1, timestamp: Math.round(Date.now()/1000)}]}))
+    setExercise((old) => ({...old, alerts: [...old.alerts, {...raw, id: alertId, timestamp: Math.round(Date.now()/1000)}]}));
+    setAlertId(alertId+1);
+  }
+
+  function removeAlert(id: Alert['id']) {
+    setExercise((old) => ({...old, alerts: old.alerts.filter((al) => al.id !== id)}))
   }
 
   function changeField(id: Alert['id'], field: keyof Alert['fields'], value: Alert['fields'][keyof Alert['fields']]) {
@@ -48,6 +53,7 @@ export default function Creator() {
   }
 
   const [exercise, setExercise] = useState<Json>({name: "", version: 1, alerts: [], ec: "full", salt: SHA256(Date.now().toString()).toString(), solution: []});
+  const [alertId, setAlertId] = useState(1);
   const [evals, setEvals] = useState<AlertEval[]>([]);
   type ECH = 'None' | 'Partial' | 'Full';
   const [ech, setEch] = useState<ECH>('Full');
@@ -118,7 +124,7 @@ export default function Creator() {
         <TextInput label="Name of the exercise" value={exercise.name} onChange={(e) => setExercise({...exercise, name: e.currentTarget.value})} />
         <NativeSelect label="Error checking" data={['None', 'Partial', 'Full']} value={ech} onChange={(e) => {setEch(e.currentTarget.value as ECH)}} />
         {
-          exercise.alerts.map((val, ix) => <MutableAlert alertData={val} evaluation={evals[ix]} changeField={changeField} key={ix} />)
+          exercise.alerts.map((val, ix) => <MutableAlert alertData={val} evaluation={evals[ix]} changeField={changeField} removeAlert={removeAlert} key={ix} />)
         }
       </Stack>
     </Group>
