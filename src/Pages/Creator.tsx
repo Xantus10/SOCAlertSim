@@ -34,7 +34,12 @@ export default function Creator() {
   }
 
   function removeAlert(id: Alert['id']) {
-    setExercise((old) => ({...old, alerts: old.alerts.filter((al) => al.id !== id)}))
+    let i = -1;
+    setExercise({...exercise, alerts: exercise.alerts.filter((al, ix) => {if (al.id !== id) {return true;} else {i = ix; return false;}})});
+
+    if (i !== -1) {
+      setEvals(evals.filter((_, ix) => ix !== i));
+    }
   }
 
   function changeField(id: Alert['id'], field: keyof Alert['fields'], value: Alert['fields'][keyof Alert['fields']]) {
@@ -59,6 +64,8 @@ export default function Creator() {
   const [ech, setEch] = useState<ECH>('Full');
 
   useEffect(() => {
+    console.log(exercise);
+    console.log(evals);
     if (ech === 'Full') {
       let salt = SHA256(Date.now().toString()).toString()
       let sols: string[] = [];
