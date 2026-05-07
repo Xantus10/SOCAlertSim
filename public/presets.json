@@ -63,10 +63,10 @@
         "hostname": "LEG-26-PC-3",
         "department": "Legal department",
         "protocol": "SSH",
-        "usernames_observed": "['SmithLep', 'smithLeo', 'SmithLeoo', 'SmithLro', 'SmithLweo']",
+        "usernames_observed": "['SmithLep', 'SMithLeo', 'SmithLro', 'SmithLweo']",
         "src_ip": "192.168.110.22",
         "src_hostname": "LAW-LAPTOP-7",
-        "total_login_attempts": 5
+        "total_login_attempts": 4
       },
       "eval": "FP"
     },
@@ -382,7 +382,7 @@
         "department": "Helpdesk department",
         "user": "SmithAle",
         "command_executable": "Windows Command Processor",
-        "command_line": "cmd.exe /k systeminfo & ipconfig /all & wmic logicaldisk get name,freespace,size,filesystem"
+        "command_line": "cmd.exe /k systeminfo & ipconfig /all"
       },
       "eval": "FP"
     }
