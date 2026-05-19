@@ -181,7 +181,8 @@
         "department": "Server",
         "src_ip": "76.189.45.48",
         "src_hostname": "Unknown (Outside IP)",
-        "http_uri": "/uploads/raspberry.php?cmd=whoami"
+        "http_uri": "/uploads/raspberry.php?cmd=whoami",
+        "command_found": "whoami"
       },
       "eval": "TP"
     },
@@ -196,7 +197,8 @@
         "department": "Server",
         "src_ip": "49.76.11.186",
         "src_hostname": "Unknown (Outside IP)",
-        "http_uri": "/usersdisplay?limitresults=20&action=ls&actionlong=list"
+        "http_uri": "/usersdisplay?limitresults=20&action=ls&actionlong=list",
+        "command_found": "ls"
       },
       "eval": "FP"
     }
