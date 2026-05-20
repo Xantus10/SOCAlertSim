@@ -361,6 +361,36 @@
         "path": "C:\\Windows\\ThreatEmulation\\Desktop\\mimikatz-trunk\\mimikatz.exe"
       },
       "eval": "FP"
+    },
+    {
+      "severity": 4,
+      "briefdesc": "Executable file on removable media",
+      "description": "An executable file was detected on a piece of removable media (USB drive). This is unusual and can be a sign of malicious activity. USB sticks amy be used for Initial Access and Lateral Movement.",
+      "mitre": ["T1091"],
+      "fields": {
+        "host_ip": "192.168.114.9",
+        "hostname": "LEG-27-PC-6",
+        "department": "Legal department",
+        "user": "SmithPau",
+        "filename": "LOAD DRIVE.exe",
+        "file_hash": "e8f55d0f327fd1d5f26428b890ef7fe878e135d494acda24ef01c695a2e9136d"
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 4,
+      "briefdesc": "Executable file on removable media",
+      "description": "An executable file was detected on a piece of removable media (USB drive). This is unusual and can be a sign of malicious activity. USB sticks amy be used for Initial Access and Lateral Movement.",
+      "mitre": ["T1091"],
+      "fields": {
+        "host_ip": "192.168.114.9",
+        "hostname": "LEG-27-PC-6",
+        "department": "Legal department",
+        "user": "SmithPau",
+        "filename": "python-3.13.9-amd64.exe",
+        "file_hash": "200ddff856bbff949d2cc1be42e8807c07538abd6b6966d5113a094cf628c5c5"
+      },
+      "eval": "FP"
     }
   ],
   "EDR - Execution": [
@@ -423,6 +453,40 @@
         "user": "SmithAle",
         "command_executable": "Windows Command Processor",
         "command_line": "cmd.exe /k systeminfo & ipconfig /all"
+      },
+      "eval": "FP"
+    },
+    {
+      "severity": 2,
+      "briefdesc": "Suspicious Parent-Child relationship",
+      "description": "Some processes shouldn't spawn instances of a command interpreter or similar. A process like WINWORD.exe usually doesn't create child processes of cmd.exe.",
+      "mitre": ["T1059", "T1218"],
+      "fields": {
+        "host_ip": "192.168.84.16",
+        "hostname": "ACC-LAPTOP-4",
+        "department": "Accounting department",
+        "user": "KaneHar",
+        "pid": 4896,
+        "parent_process": "excel.exe",
+        "child_process": "rundll32.exe",
+        "command_line": "rundll32.exe \"Control Sequence.do not open.dll\",\"Init\""
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 2,
+      "briefdesc": "Suspicious Parent-Child relationship",
+      "description": "Some processes shouldn't spawn instances of a command interpreter or similar. A process like WINWORD.exe usually doesn't create child processes of cmd.exe.",
+      "mitre": ["T1059", "T1218"],
+      "fields": {
+        "host_ip": "192.168.84.16",
+        "hostname": "ACC-LAPTOP-4",
+        "department": "Accounting department",
+        "user": "KaneHar",
+        "pid": 4896,
+        "parent_process": "teams.exe",
+        "child_process": "chrome.exe",
+        "command_line": "chrome.exe --new-window \"https://login.microsoftonline.com/be710118-0041-4eaa-a706-1dc706568308/oauth2/v2.0/authorize?client_id=06267daf-fc71-466e-a5cf-97ceadba14a6\""
       },
       "eval": "FP"
     }
