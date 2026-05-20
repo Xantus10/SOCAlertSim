@@ -182,7 +182,7 @@
         "src_ip": "76.189.45.48",
         "src_hostname": "Unknown (Outside IP)",
         "http_uri": "/uploads/raspberry.php?cmd=whoami",
-        "command_found": "whoami"
+        "waf_command_found": "whoami"
       },
       "eval": "TP"
     },
@@ -198,7 +198,45 @@
         "src_ip": "49.76.11.186",
         "src_hostname": "Unknown (Outside IP)",
         "http_uri": "/usersdisplay?limitresults=20&action=ls&actionlong=list",
-        "command_found": "ls"
+        "waf_command_found": "ls"
+      },
+      "eval": "FP"
+    },
+    {
+      "severity": 2,
+      "briefdesc": "WAF flagged a suspicious communication - SQL injection",
+      "description": "This rule matches SQL syntax in web request body",
+      "mitre": ["T1190"],
+      "fields": {
+        "host_ip": "192.168.10.2",
+        "hostname": "SRV-WEB-1",
+        "department": "Server",
+        "src_ip": "49.76.11.186",
+        "src_hostname": "Unknown (Outside IP)",
+        "http_method": "PUT",
+        "http_uri": "/account/update",
+        "http_request_body": "{\"username\": \"adolf', role='admin\"}",
+        "sql_columns": "['id', 'username', 'hash', 'role', 'active']",
+        "sql_query": "UPDATE users SET username='{USERNAME}' WHERE id={ID}"
+      },
+      "eval": "TP"
+    },
+    {
+      "severity": 2,
+      "briefdesc": "WAF flagged a suspicious communication - SQL injection",
+      "description": "This rule matches SQL syntax in web request body",
+      "mitre": ["T1190"],
+      "fields": {
+        "host_ip": "192.168.10.2",
+        "hostname": "SRV-WEB-1",
+        "department": "Server",
+        "src_ip": "49.76.11.186",
+        "src_hostname": "Unknown (Outside IP)",
+        "http_method": "POST",
+        "http_uri": "/forum/reply",
+        "http_request_body": "{\"replying_to\": \"2611\", \"content\": \"The correct syntax seems to be UNION SELECT username, password FROM users\"}",
+        "sql_columns": "['id', 'user_id', 'replying_to', 'content']",
+        "sql_query": "INSERT INTO replies(user_id, replying_to, content) VALUES ({USER_ID}, {REPLYING_TO}, '{CONTENT}')"
       },
       "eval": "FP"
     }
