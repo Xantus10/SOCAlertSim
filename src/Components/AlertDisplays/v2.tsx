@@ -10,7 +10,7 @@ import { severityString, severityColor, alertEvalString, alertEvalColor, type Al
 import type { V2Json, JsonECpart, JsonECfull, Alert, Log } from "../types/v2";
 
 
-
+import classes from "./responsive.module.css";
 
 
 interface GetFuncRet {
@@ -69,12 +69,12 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
     <>
     <Paper bg={"dark.6"} bd={`solid 1px ${severityColor(severity)}`} key={id}>
       <Grid align="center" ta="center" p={15}>
-        <Grid.Col span={1}>{id}</Grid.Col>
-        <Grid.Col span={2}>{new Date(timestamp*1000).toLocaleString()}</Grid.Col>
-        <Grid.Col span={1} ta={'left'}>{severityString(severity)}</Grid.Col>
-        <Grid.Col span={4} ta={'left'}>{briefdesc}</Grid.Col>
-        <Grid.Col span={2} c={alertEvalColor(seval)}>{alertEvalString(seval)}</Grid.Col>
-        <Grid.Col span={2}>
+        <Grid.Col span={{md: 1, base: 3}}>{id}</Grid.Col>
+        <Grid.Col span={{md: 2, base: 6}}>{new Date(timestamp*1000).toLocaleString()}</Grid.Col>
+        <Grid.Col span={{md: 1, base: 3}} ta={'left'}>{severityString(severity)}</Grid.Col>
+        <Grid.Col span={{md: 4, base: 12}} ta={'left'}>{briefdesc}</Grid.Col>
+        <Grid.Col span={{md: 2, base: 6}} c={alertEvalColor(seval)}>{alertEvalString(seval)}</Grid.Col>
+        <Grid.Col span={{md: 2, base: 6}}>
           <Group justify="space-around">
             <Button onClick={editDiscController.toggle}><FaEdit /></Button>
             <Button onClick={detailsDiscController.toggle}>{ (detailsDisc) ? <IoIosArrowUp /> : <IoIosArrowDown />}</Button>
@@ -199,12 +199,12 @@ export function AlertsDisplay( { json }: {json: V2Json} ) {
             {fec}
         </Group>
       </Group>
-      <Grid align="center" ta="center" p={5}>
-        <Grid.Col span={1} bd={"solid 1px white"}>ID</Grid.Col>
-        <Grid.Col span={2} bd={"solid 1px white"}>Timestamp</Grid.Col>
-        <Grid.Col span={1} bd={"solid 1px white"}>Severity</Grid.Col>
-        <Grid.Col span={4} bd={"solid 1px white"}>Brief description</Grid.Col>
-        <Grid.Col span={2} bd={"solid 1px white"}>Status</Grid.Col>
+      <Grid align="center" ta="center" p={5} bd={"solid 1px white"} className={classes.header}>
+        <Grid.Col span={1}>ID</Grid.Col>
+        <Grid.Col span={2}>Timestamp</Grid.Col>
+        <Grid.Col span={1}>Severity</Grid.Col>
+        <Grid.Col span={4}>Brief description</Grid.Col>
+        <Grid.Col span={2}>Status</Grid.Col>
       </Grid>
       {json.alerts.map((val) => (<SingleAlert alertData={val} seval={sevals[val.id]} setEval={(e: AlertEval) => setEval(val.id, e)} ta={tas[val.id]} setTa={(s: string) => setTa(val.id, s)} />))}
     </Stack>

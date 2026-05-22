@@ -8,6 +8,7 @@ import { SHA256 } from "crypto-js";
 
 import { severityString, severityColor, alertEvalColor, alertEvalString, evals, type AlertEval, type Alert, type V1Json, type JsonECpart, type JsonECfull } from "../types/v1";
 
+import classes from "./responsive.module.css";
 
 interface GetFuncRet {
   /**
@@ -41,12 +42,12 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
     <>
     <Paper bg={"dark.6"} bd={`solid 1px ${severityColor(severity)}`} key={id}>
       <Grid align="center" ta="center" p={15}>
-        <Grid.Col span={1}>{id}</Grid.Col>
-        <Grid.Col span={2}>{new Date(timestamp*1000).toLocaleString()}</Grid.Col>
-        <Grid.Col span={1} ta={'left'}>{severityString(severity)}</Grid.Col>
-        <Grid.Col span={4} ta={'left'}>{briefdesc}</Grid.Col>
-        <Grid.Col span={2} c={alertEvalColor(seval)}>{alertEvalString(seval)}</Grid.Col>
-        <Grid.Col span={2}>
+        <Grid.Col span={{md: 1, base: 3}}>{id}</Grid.Col>
+        <Grid.Col span={{md: 2, base: 6}}>{new Date(timestamp*1000).toLocaleString()}</Grid.Col>
+        <Grid.Col span={{md: 1, base: 3}} ta={'left'}>{severityString(severity)}</Grid.Col>
+        <Grid.Col span={{md: 4, base: 12}} ta={'left'}>{briefdesc}</Grid.Col>
+        <Grid.Col span={{md: 2, base: 6}} c={alertEvalColor(seval)}>{alertEvalString(seval)}</Grid.Col>
+        <Grid.Col span={{md: 2, base: 6}}>
           <Group justify="space-around">
             <Button onClick={editDiscController.toggle}><FaEdit /></Button>
             <Button onClick={detailsDiscController.toggle}>{ (detailsDisc) ? <IoIosArrowUp /> : <IoIosArrowDown />}</Button>
@@ -64,7 +65,7 @@ export function SingleAlert( { alertData, seval, setEval, ta, setTa } : {alertDa
             })
           }
         </Stack>
-        <Table data={{body: Object.entries(fields)}} />
+        <Table data={{body: Object.entries(fields).map((val) => [<Text>{val[0]}</Text>, <Text style={{wordWrap: 'break-word'}}>{val[1]}</Text>])}} />
       </Stack>
       <Stack display={(editDisc) ? "inherit" : "none"} p={15}>
         <Title order={4}>Evaluate</Title>
@@ -89,12 +90,12 @@ export function MutableAlert( { alertData, evaluation, changeField, removeAlert 
     <>
     <Paper bg={"dark.6"} bd={`solid 1px ${severityColor(severity)}`} key={id}>
       <Grid align="center" ta="center" p={15}>
-        <Grid.Col span={1}>{id}</Grid.Col>
-        <Grid.Col span={2}>{new Date(timestamp*1000).toLocaleString()}</Grid.Col>
-        <Grid.Col span={1} ta={'left'}>{severityString(severity)}</Grid.Col>
-        <Grid.Col span={4} ta={'left'}>{briefdesc}</Grid.Col>
-        <Grid.Col span={2} c={alertEvalColor(evaluation)}>{alertEvalString(evaluation)}</Grid.Col>
-        <Grid.Col span={2}>
+        <Grid.Col span={{md: 1, base: 3}}>{id}</Grid.Col>
+        <Grid.Col span={{md: 2, base: 6}}>{new Date(timestamp*1000).toLocaleString()}</Grid.Col>
+        <Grid.Col span={{md: 1, base: 3}} ta={'left'}>{severityString(severity)}</Grid.Col>
+        <Grid.Col span={{md: 4, base: 12}} ta={'left'}>{briefdesc}</Grid.Col>
+        <Grid.Col span={{md: 2, base: 6}} c={alertEvalColor(evaluation)}>{alertEvalString(evaluation)}</Grid.Col>
+        <Grid.Col span={{md: 2, base: 6}}>
           <Group justify="space-around">
             <Button onClick={detailsDiscController.toggle}>{ (detailsDisc) ? <IoIosArrowUp /> : <IoIosArrowDown />}</Button>
             <Button onClick={() => removeAlert(id)}><FaTrashAlt /></Button>
@@ -213,7 +214,7 @@ export function AlertsDisplay( { json }: {json: V1Json} ) {
             {fec}
         </Group>
       </Group>
-      <Grid align="center" ta="center" p={5} bd={"solid 1px white"}>
+      <Grid align="center" ta="center" p={5} bd={"solid 1px white"} className={classes.header}>
         <Grid.Col span={1}>ID</Grid.Col>
         <Grid.Col span={2}>Timestamp</Grid.Col>
         <Grid.Col span={1}>Severity</Grid.Col>

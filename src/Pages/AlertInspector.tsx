@@ -7,17 +7,18 @@ import type { JsonSchema } from "../Components/types/JsonSchema";
 import { AlertsDisplay as ADv1 } from "../Components/AlertDisplays/v1";
 import { AlertsDisplay as ADv2 } from "../Components/AlertDisplays/v2";
 
+import classes from "./responsive.module.css";
 
 export default function AlertInspector() {
   const [json, setJson] = useState<JsonSchema | null>(null)
   
   return (
     <>
-      <Group p="1rem" align="flex-start" m="1rem">
+      <Group align="flex-start" className={classes.group}>
         <Box>
           <SelectJson setJson={setJson} />
         </Box>
-        <Box m={30} p={30} bd={"solid 1px white"} w="85vw">
+        <Box className={classes.pagecontainer}>
           {
             (!json) ?
               <Text size="lg">Please select a JSON</Text>

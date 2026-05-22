@@ -8,6 +8,8 @@ import NewAlert from "../Components/NewAlert";
 import type { PresetAlert as PresetAlertV1, V1Json as Json, Alert, AlertEval } from "../Components/types/v1";
 import { MutableAlert } from "../Components/AlertDisplays/v1";
 
+import classes from "./responsive.module.css";
+
 type Presets = {[key: string]: PresetAlertV1[]}
 
 
@@ -99,7 +101,7 @@ export default function Creator() {
 
   return (
     <>
-      <Group align="flex-start" m="1rem">
+      <Group align="flex-start" className={classes.group}>
       <Stack pt="1rem">
         <Button onClick={newDiscController.open}>New</Button>
         <Title order={3}>Presets</Title>
@@ -126,7 +128,7 @@ export default function Creator() {
           })
         }
       </Stack>
-      <Stack m={30} p={30} bd={"solid 1px white"} w="85vw">
+      <Stack className={classes.pagecontainer}>
         <Button onClick={exportAnswers}>Export</Button>
         <TextInput label="Name of the exercise" value={exercise.name} onChange={(e) => setExercise({...exercise, name: e.currentTarget.value})} />
         <NativeSelect label="Error checking" data={['None', 'Partial', 'Full']} value={ech} onChange={(e) => {setEch(e.currentTarget.value as ECH)}} />
