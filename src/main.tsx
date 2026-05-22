@@ -29,7 +29,7 @@ const theme = createTheme({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <MantineProvider theme={theme} forceColorScheme='dark'>
-      <BrowserRouter basename='/SOCAlertSim'>
+      <BrowserRouter basename='/SOCAlertSim/'>
         <App />
         <Notifications position='bottom-right' />
       </BrowserRouter>
